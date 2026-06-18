@@ -366,7 +366,7 @@ export default function HeroSlideshow() {
         </div>
       </div>
 
-      <style jsx>{`
+      <style jsx global>{`
         .hero-slideshow {
           position: absolute;
           inset: 0;
