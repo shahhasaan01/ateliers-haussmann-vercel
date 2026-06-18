@@ -893,6 +893,94 @@ img {
   gap: 0.5rem;
 }
 
+/* Before / After Section */
+.before-after-section {
+  background:
+    radial-gradient(circle at top left, rgba(155, 191, 136, 0.28), transparent 34rem),
+    var(--cream);
+}
+
+.before-after-header {
+  max-width: 720px;
+  margin-bottom: 2.5rem;
+}
+
+.before-after-header .body-lg {
+  margin-top: 1rem;
+}
+
+.before-after-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+}
+
+.before-after-card {
+  background: white;
+  border: 1px solid rgba(98, 124, 78, 0.16);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  transition: transform 0.35s var(--ease-out), box-shadow 0.35s var(--ease-out);
+}
+
+.before-after-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-xl);
+}
+
+.before-after-image {
+  min-height: 240px;
+  background-size: cover;
+  background-position: center;
+}
+
+.before-after-content {
+  padding: 1.25rem;
+}
+
+.before-after-content span {
+  display: inline-flex;
+  margin-bottom: 0.75rem;
+  padding: 0.35rem 0.65rem;
+  border-radius: var(--radius-full);
+  background: rgba(196, 92, 61, 0.1);
+  color: var(--terracotta);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.before-after-content h3 {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  color: var(--forest);
+  margin-bottom: 0.4rem;
+}
+
+.before-after-content p {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+@media (max-width: 1100px) {
+  .before-after-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .before-after-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .before-after-image {
+    min-height: 220px;
+  }
+}
+
 /* Aide Section */
 .aide-section {
   background: var(--forest);

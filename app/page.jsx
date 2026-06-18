@@ -204,6 +204,68 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Before / After Section */}
+      <section className="before-after-section section">
+        <div className="container">
+          <div className="before-after-header reveal">
+            <span className="eyebrow">Avant / Après</span>
+            <h2 className="display-md">
+              Des chantiers visibles, des résultats concrets
+            </h2>
+            <p className="body-lg">
+              Nos équipes interviennent avec une tenue identifiable Ateliers Haussmann,
+              des finitions propres et un suivi complet jusqu&apos;aux aides.
+            </p>
+          </div>
+
+          <div className="before-after-grid">
+            {[
+              {
+                image: '/images/before-after-exterior-renovation.png',
+                title: 'Rénovation extérieure',
+                desc: 'Façade isolée, finition propre et meilleur confort thermique.',
+                badge: 'ITE + façade'
+              },
+              {
+                image: '/images/before-after-interior-insulation.png',
+                title: 'Confort intérieur',
+                desc: 'Pièce assainie, isolation renforcée et chauffage modernisé.',
+                badge: 'Isolation + PAC'
+              },
+              {
+                image: '/images/worker-pac-ateliers-haussmann.png',
+                title: 'Équipe identifiable',
+                desc: 'Techniciens en T-shirt Ateliers Haussmann sur chantier.',
+                badge: 'QualiPAC'
+              },
+              {
+                image: '/images/worker-insulation-ateliers-haussmann.png',
+                title: 'Pose professionnelle',
+                desc: 'Travail soigné sur isolation extérieure et rénovation globale.',
+                badge: 'Artisan RGE'
+              },
+            ].map((item, index) => (
+              <article
+                className={`before-after-card reveal reveal-delay-${(index % 4) + 1}`}
+                key={item.title}
+              >
+                <div
+                  className="before-after-image"
+                  style={{ backgroundImage: `url(${item.image})` }}
+                  aria-label={item.title}
+                  role="img"
+                />
+                <div className="before-after-content">
+                  <span>{item.badge}</span>
+                  <h3>{item.title}</h3>
+                  <p>{item.desc}</p>
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Aide Section */}
       <section className="aide-section section">
         <div className="container">
