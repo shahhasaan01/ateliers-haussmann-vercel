@@ -9,7 +9,7 @@ import { IconPhone, IconMapPin, IconMail, IconClock, IconArrowRight } from '@/co
 const SLIDES = [
   {
     id: 1,
-    image: '/images/hero-1.svg',
+    image: '/images/hero-1.jpg',
     imagePosition: 'center',
     alt: 'Maison rénovée avec pompe à chaleur',
     tagline: 'Artisan RGE Certifié',
@@ -23,7 +23,7 @@ const SLIDES = [
   },
   {
     id: 2,
-    image: '/images/hero-2.svg',
+    image: '/images/hero-2.jpg',
     imagePosition: 'center 42%',
     alt: 'Installation pompe à chaleur',
     tagline: 'QualiPAC Certifié',
@@ -37,7 +37,7 @@ const SLIDES = [
   },
   {
     id: 3,
-    image: '/images/hero-3.svg',
+    image: '/images/hero-3.jpg',
     imagePosition: 'center',
     alt: 'Isolation extérieure ITE',
     tagline: 'Isolation performante',
@@ -51,7 +51,7 @@ const SLIDES = [
   },
   {
     id: 4,
-    image: '/images/hero-4.svg',
+    image: '/images/hero-4.jpg',
     imagePosition: 'center 45%',
     alt: 'Maison éco-rénovée',
     tagline: 'Rénovation globale',
@@ -65,7 +65,7 @@ const SLIDES = [
   },
   {
     id: 5,
-    image: '/images/hero-5.svg',
+    image: '/images/hero-5.jpg',
     imagePosition: 'center',
     alt: 'Ballon thermodynamique',
     tagline: 'Eau chaude sanitaire',
@@ -79,7 +79,7 @@ const SLIDES = [
   },
   {
     id: 6,
-    image: '/images/hero-6.svg',
+    image: '/images/hero-6.jpg',
     imagePosition: 'center 38%',
     alt: 'Équipe Ateliers Haussmann',
     tagline: 'Toute la France',
