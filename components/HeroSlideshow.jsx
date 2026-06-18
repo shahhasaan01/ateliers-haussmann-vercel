@@ -381,6 +381,7 @@ export default function HeroSlideshow() {
           height: 110%;
           background-size: cover;
           background-position: center;
+          filter: brightness(1.12) saturate(1.08);
           will-change: transform, opacity;
         }
 
@@ -403,9 +404,9 @@ export default function HeroSlideshow() {
           inset: 0;
           background: linear-gradient(
             135deg,
-            rgba(13, 22, 18, 0.85) 0%,
-            rgba(13, 22, 18, 0.6) 50%,
-            rgba(13, 22, 18, 0.75) 100%
+            rgba(13, 22, 18, 0.58) 0%,
+            rgba(13, 22, 18, 0.24) 52%,
+            rgba(13, 22, 18, 0.5) 100%
           );
           z-index: 1;
         }
