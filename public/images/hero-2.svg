@@ -1,0 +1,29 @@
+<svg width="1600" height="1000" viewBox="0 0 1600 1000" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">Installation pompe a chaleur</title>
+  <desc id="desc">Illustration d'une unite de pompe a chaleur devant une maison moderne.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#eaf9e2"/>
+      <stop offset="0.55" stop-color="#7a9e69"/>
+      <stop offset="1" stop-color="#1f2d18"/>
+    </linearGradient>
+    <linearGradient id="metal" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f5ffef"/>
+      <stop offset="1" stop-color="#bbdaad"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="1000" fill="url(#bg)"/>
+  <path d="M0 690 C260 625 460 635 715 575 C1030 500 1285 535 1600 445 V1000 H0 Z" fill="#172415" opacity="0.85"/>
+  <g transform="translate(310 260)">
+    <rect x="230" y="145" width="640" height="390" rx="24" fill="#f5ffef" opacity="0.88"/>
+    <path d="M205 145 H895 L810 55 H295 Z" fill="#344d28"/>
+    <rect x="300" y="235" width="160" height="150" rx="8" fill="#1f2d18" opacity="0.78"/>
+    <rect x="610" y="235" width="160" height="150" rx="8" fill="#1f2d18" opacity="0.78"/>
+    <rect x="0" y="355" width="310" height="230" rx="28" fill="url(#metal)" stroke="#d2eac6" stroke-width="8"/>
+    <circle cx="155" cy="470" r="78" fill="none" stroke="#627c4e" stroke-width="18"/>
+    <circle cx="155" cy="470" r="30" fill="#627c4e"/>
+    <path d="M155 392 L155 548 M77 470 H233 M101 416 L209 524 M209 416 L101 524" stroke="#344d28" stroke-width="8" stroke-linecap="round" opacity="0.62"/>
+    <rect x="52" y="384" width="72" height="20" rx="10" fill="#c45c3d"/>
+  </g>
+  <circle cx="1265" cy="185" r="170" fill="#f5ffef" opacity="0.35"/>
+</svg>

@@ -2009,6 +2009,140 @@ img {
   top: 0;
 }
 
+/* Mobile hardening */
+@media (max-width: 768px) {
+  :root {
+    --nav-height: 68px;
+    --space-2xl: 3rem;
+    --space-3xl: 4rem;
+  }
+
+  html,
+  body {
+    width: 100%;
+    overflow-x: hidden;
+  }
+
+  .container,
+  .container-narrow {
+    padding-inline: 1rem;
+  }
+
+  .section {
+    padding: 4rem 0;
+  }
+
+  .rge-strip {
+    padding: 0.4rem 0;
+  }
+
+  .rge-strip-inner {
+    gap: 0.5rem;
+    justify-content: center;
+  }
+
+  .rge-strip-text {
+    display: none;
+  }
+
+  .site-header {
+    background: rgba(30,45,24,0.94);
+    backdrop-filter: blur(16px);
+  }
+
+  .logo-name {
+    font-size: 1rem;
+  }
+
+  .logo-tagline {
+    display: none;
+  }
+
+  .mobile-nav {
+    padding: 1.25rem 1rem 2rem;
+  }
+
+  .aide-banner-inner {
+    gap: 0.9rem;
+    text-align: center;
+  }
+
+  .aide-banner-text {
+    font-size: 0.875rem;
+  }
+
+  .aide-banner-cta,
+  .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .services-header {
+    margin-bottom: 2rem;
+  }
+
+  .aide-step-card,
+  .why-feature,
+  .service-feature-item {
+    gap: 0.85rem;
+  }
+
+  .why-badge-float {
+    right: 0.75rem;
+    bottom: 0.75rem;
+  }
+
+  .quote-form-card,
+  .sidebar-card {
+    padding: 1.25rem;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .footer-cta-inner,
+  .footer-bottom-inner {
+    align-items: stretch;
+    text-align: center;
+  }
+
+  .footer-cta-actions,
+  .footer-legal-links {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .display-xl,
+  .display-lg,
+  .display-md,
+  .heading-lg,
+  .page-hero h1 {
+    overflow-wrap: break-word;
+    text-wrap: balance;
+  }
+
+  .rge-badge {
+    font-size: 0.62rem;
+    padding: 0.2rem 0.45rem;
+  }
+
+  .logo-mark {
+    width: 32px;
+    height: 32px;
+  }
+
+  .certs-wrapper {
+    gap: 1rem;
+  }
+
+  .footer-legal-links {
+    gap: 0.75rem;
+  }
+}
+
 /* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
   *,

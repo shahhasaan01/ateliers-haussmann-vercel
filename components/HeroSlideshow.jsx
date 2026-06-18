@@ -5,12 +5,12 @@ import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
 import { IconPhone, IconMapPin, IconMail, IconClock, IconArrowRight } from '@/components/ServiceIcons';
 
-// Image configuration - Using local images for reliability
-// Download images from Unsplash and place them in /public/images/
+// Public assets are checked in so static Vercel exports can serve them reliably.
 const SLIDES = [
   {
     id: 1,
-    image: '/images/hero-1.jpg',
+    image: '/images/hero-1.svg',
+    imagePosition: 'center',
     alt: 'Maison rénovée avec pompe à chaleur',
     tagline: 'Artisan RGE Certifié',
     headline: 'Rénovez votre logement',
@@ -23,7 +23,8 @@ const SLIDES = [
   },
   {
     id: 2,
-    image: '/images/hero-2.jpg',
+    image: '/images/hero-2.svg',
+    imagePosition: 'center 42%',
     alt: 'Installation pompe à chaleur',
     tagline: 'QualiPAC Certifié',
     headline: 'Pompe à chaleur',
@@ -36,7 +37,8 @@ const SLIDES = [
   },
   {
     id: 3,
-    image: '/images/hero-3.jpg',
+    image: '/images/hero-3.svg',
+    imagePosition: 'center',
     alt: 'Isolation extérieure ITE',
     tagline: 'Isolation performante',
     headline: 'Isolation intérieure',
@@ -49,7 +51,8 @@ const SLIDES = [
   },
   {
     id: 4,
-    image: '/images/hero-4.jpg',
+    image: '/images/hero-4.svg',
+    imagePosition: 'center 45%',
     alt: 'Maison éco-rénovée',
     tagline: 'Rénovation globale',
     headline: 'MPR Ampleur',
@@ -62,7 +65,8 @@ const SLIDES = [
   },
   {
     id: 5,
-    image: '/images/hero-5.jpg',
+    image: '/images/hero-5.svg',
+    imagePosition: 'center',
     alt: 'Ballon thermodynamique',
     tagline: 'Eau chaude sanitaire',
     headline: 'Ballon thermodynamique',
@@ -75,7 +79,8 @@ const SLIDES = [
   },
   {
     id: 6,
-    image: '/images/hero-6.jpg',
+    image: '/images/hero-6.svg',
+    imagePosition: 'center 38%',
     alt: 'Équipe Ateliers Haussmann',
     tagline: 'Toute la France',
     headline: 'Ateliers Haussmann',
@@ -213,6 +218,7 @@ export default function HeroSlideshow() {
           exit="exit"
           style={{
             backgroundImage: `url(${slide.image})`,
+            backgroundPosition: slide.imagePosition,
           }}
         />
       </AnimatePresence>
@@ -420,6 +426,7 @@ export default function HeroSlideshow() {
           display: flex;
           align-items: center;
           padding: 120px 0 100px;
+          min-height: 100%;
         }
 
         .hero-container {
@@ -431,10 +438,12 @@ export default function HeroSlideshow() {
           grid-template-columns: 1fr auto;
           gap: 4rem;
           align-items: center;
+          min-width: 0;
         }
 
         .hero-text-content {
           max-width: 600px;
+          min-width: 0;
         }
 
         .hero-tagline {
@@ -460,6 +469,8 @@ export default function HeroSlideshow() {
           letter-spacing: -0.02em;
           color: white;
           margin-bottom: 1.25rem;
+          overflow-wrap: break-word;
+          text-wrap: balance;
         }
 
         .hero-subheadline {
@@ -497,6 +508,7 @@ export default function HeroSlideshow() {
           transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
           cursor: pointer;
           border: none;
+          min-height: 48px;
         }
 
         .hero-btn-primary {
@@ -722,13 +734,13 @@ export default function HeroSlideshow() {
         /* Mobile Info Bar */
         .hero-mobile-info {
           display: none;
-          position: fixed;
+          position: absolute;
           bottom: 0;
           left: 0;
           right: 0;
           z-index: 100;
           background: #1a2f1f;
-          padding: 0.75rem 1rem;
+          padding: 0.75rem 1rem calc(0.75rem + env(safe-area-inset-bottom));
           border-top: 1px solid rgba(255, 255, 255, 0.1);
         }
 
@@ -825,18 +837,34 @@ export default function HeroSlideshow() {
 
         @media (max-width: 768px) {
           .hero-content-wrapper {
-            padding: 100px 0 140px;
-            align-items: flex-start;
+            padding: calc(var(--rge-height, 36px) + var(--nav-height, 80px) + 1.25rem) 0 8.5rem;
+            align-items: center;
+          }
+
+          .hero-container {
+            padding-inline: 1rem;
+          }
+
+          .hero-content-grid {
+            gap: 1.25rem;
+          }
+
+          .hero-text-content {
+            width: min(100%, 36rem);
+            margin-inline: auto;
           }
           
           .hero-headline {
-            font-size: 2rem;
+            font-size: clamp(2rem, 10vw, 2.75rem);
+            line-height: 0.98;
             margin-bottom: 1rem;
           }
           
           .hero-description {
-            font-size: 1rem;
+            font-size: 0.98rem;
+            line-height: 1.55;
             margin-bottom: 1.5rem;
+            max-width: 34rem;
           }
           
           .hero-cta-group {
@@ -848,6 +876,7 @@ export default function HeroSlideshow() {
           .hero-btn {
             width: 100%;
             justify-content: center;
+            padding: 0.875rem 1rem;
           }
           
           .hero-contact-info {
@@ -863,11 +892,14 @@ export default function HeroSlideshow() {
           }
           
           .hero-indicators {
-            bottom: 5rem;
+            bottom: 5.75rem;
+            width: calc(100% - 2rem);
+            justify-content: center;
           }
           
           .hero-dot {
-            width: 32px;
+            width: min(32px, 12vw);
+            flex: 0 1 32px;
           }
           
           .hero-scroll-indicator {
@@ -880,8 +912,12 @@ export default function HeroSlideshow() {
         }
 
         @media (max-width: 480px) {
+          .hero-content-wrapper {
+            padding-top: calc(var(--rge-height, 36px) + var(--nav-height, 68px) + 0.75rem);
+          }
+
           .hero-headline {
-            font-size: 1.75rem;
+            font-size: clamp(1.85rem, 12vw, 2.35rem);
           }
           
           .hero-tagline {
@@ -894,7 +930,13 @@ export default function HeroSlideshow() {
           }
           
           .hero-indicators {
-            bottom: 4.5rem;
+            bottom: 5.25rem;
+            gap: 0.5rem;
+          }
+
+          .hero-mobile-btn {
+            width: 100%;
+            justify-content: center;
           }
         }
 

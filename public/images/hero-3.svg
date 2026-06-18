@@ -1,0 +1,30 @@
+<svg width="1600" height="1000" viewBox="0 0 1600 1000" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">Isolation interieure et exterieure</title>
+  <desc id="desc">Illustration d'une facade isolee avec panneaux de renovation energetique.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f5ffef"/>
+      <stop offset="0.5" stop-color="#9bbf88"/>
+      <stop offset="1" stop-color="#344d28"/>
+    </linearGradient>
+    <pattern id="grid" width="92" height="92" patternUnits="userSpaceOnUse">
+      <rect width="92" height="92" fill="#eaf9e2"/>
+      <path d="M92 0H0V92" fill="none" stroke="#9bbf88" stroke-width="5" opacity="0.55"/>
+    </pattern>
+  </defs>
+  <rect width="1600" height="1000" fill="url(#bg)"/>
+  <path d="M0 760 C250 665 490 690 760 610 C1040 527 1305 590 1600 500 V1000 H0 Z" fill="#1f2d18" opacity="0.82"/>
+  <g transform="translate(410 185)">
+    <rect x="0" y="160" width="780" height="510" rx="28" fill="url(#grid)" stroke="#f5ffef" stroke-width="12"/>
+    <path d="M-35 160 L390 0 L815 160 Z" fill="#1f2d18"/>
+    <path d="M100 160 L390 52 L680 160 Z" fill="#c45c3d"/>
+    <rect x="135" y="280" width="165" height="150" rx="8" fill="#344d28" opacity="0.8"/>
+    <rect x="480" y="280" width="165" height="150" rx="8" fill="#344d28" opacity="0.8"/>
+    <rect x="345" y="475" width="90" height="195" rx="8" fill="#1f2d18"/>
+  </g>
+  <g opacity="0.6">
+    <rect x="195" y="615" width="170" height="54" rx="27" fill="#c45c3d"/>
+    <rect x="1210" y="350" width="230" height="62" rx="31" fill="#d4a574"/>
+    <rect x="1115" y="438" width="180" height="46" rx="23" fill="#f5ffef"/>
+  </g>
+</svg>
