@@ -2,9 +2,10 @@
 import { useState } from 'react';
 
 const SERVICES_LIST = [
-  'Pompe à chaleur','Ballon thermodynamique','Isolation intérieure',
-  'Isolation extérieure','VMC','Système solaire combiné',
-  'Chaudière à gaz','Rénovation globale',
+  'Pompe à chaleur',
+  'Ballon thermodynamique',
+  'Système solaire combiné',
+  'Climatisation',
 ];
 
 export default function QuoteForm({ variant = 'dark', service = '' }) {

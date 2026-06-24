@@ -870,6 +870,11 @@ img {
   transform: scale(1.05);
 }
 
+/* Remove white background border from QualiSol logo */
+.logo-marquee-track img[alt="QualiSol RGE"] {
+  mix-blend-mode: multiply;
+}
+
 @keyframes marquee {
   0% {
     transform: translateX(0);
