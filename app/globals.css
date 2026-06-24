@@ -3,7 +3,8 @@
    Inspired by Parisian architectural studios
    ============================================================ */
 
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap');
+/* Fonts (Cormorant Garamond + Inter) are loaded via next/font in app/layout.jsx
+   and exposed as --font-display / --font-body on <html>. */
 
 *, *::before, *::after {
   box-sizing: border-box;
@@ -47,16 +48,23 @@
   --charcoal:       #1a2616;
   --text-primary:   #1f2d18;
   --text-secondary: #4a6837;
-  --text-muted:     #7A9E69;
+  --text-muted:     #5f7d4c;
+
+  /* Backward-compat aliases — legacy tokens remapped to the sage palette
+     so older inner pages stay on-brand instead of falling back/invalid. */
+  --navy:           #1f2d18;
+  --warm-white:     #EAF9E2;
+  --text-body:      #3f5733;
+  --border:         #cfe3c2;
 
   /* Gradients */
   --grad-forest:    linear-gradient(180deg, var(--forest-deep) 0%, var(--forest) 100%);
   --grad-terracotta:linear-gradient(135deg, var(--terracotta) 0%, var(--terracotta-light) 100%);
   --grad-sage:      linear-gradient(135deg, var(--sage-mid) 0%, var(--olive) 100%);
   
-  /* Typography */
-  --font-display:   'Cormorant Garamond', Georgia, serif;
-  --font-body:      'Inter', system-ui, sans-serif;
+  /* Typography — --font-display / --font-body are defined by next/font
+     on the <html> element (see app/layout.jsx). Not redefined here so the
+     optimized, self-hosted fonts always win the cascade. */
   
   /* Spacing scale */
   --space-xs:       0.25rem;
@@ -69,7 +77,7 @@
   
   /* Layout */
   --nav-height:     80px;
-  --rge-height:     36px;
+  --rge-height:     0px;
   --max-width:      1280px;
   --content-width:  720px;
   
@@ -127,6 +135,12 @@ img {
 
 .container-narrow {
   max-width: var(--content-width);
+  margin: 0 auto;
+  padding: 0 var(--space-lg);
+}
+
+.container--wide {
+  max-width: 1440px;
   margin: 0 auto;
   padding: 0 var(--space-lg);
 }
@@ -199,6 +213,16 @@ img {
   font-size: 0.875rem;
   line-height: 1.6;
   color: var(--text-muted);
+}
+
+/* Section heading (inner pages) */
+.section-heading {
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 3vw, 2.25rem);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: var(--forest);
 }
 
 /* Label/eyebrow style */
@@ -280,6 +304,27 @@ img {
 .btn-outline-white:hover {
   background: rgba(255,255,255,0.1);
   border-color: rgba(255,255,255,0.5);
+}
+
+.btn-copper-outline {
+  background: transparent;
+  color: var(--terracotta);
+  border: 1px solid var(--terracotta);
+}
+
+.btn-copper-outline:hover {
+  background: var(--terracotta);
+  color: white;
+}
+
+.btn-sm {
+  padding: 0.6rem 1.1rem;
+  font-size: 0.8125rem;
+}
+
+.btn-lg {
+  padding: 1rem 2rem;
+  font-size: 0.9375rem;
 }
 
 /* RGE Strip - Fixed top */
@@ -792,6 +837,57 @@ img {
   border-color: rgba(255,255,255,0.3);
 }
 
+/* Logo Marquee Scrolling Announcement Bar */
+.logo-marquee-container {
+  overflow: hidden;
+  white-space: nowrap;
+  width: 100%;
+  background: white;
+  padding: 1.25rem 0;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+}
+
+.logo-marquee-track {
+  display: inline-flex;
+  gap: 6rem;
+  animation: marquee 30s linear infinite;
+  align-items: center;
+}
+
+.logo-marquee-track img {
+  height: 60px;
+  width: auto;
+  object-fit: contain;
+  filter: grayscale(10%) contrast(100%);
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+}
+
+.logo-marquee-track img:hover {
+  filter: grayscale(0%);
+  transform: scale(1.05);
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-33.3333%);
+  }
+}
+
+@media (max-width: 600px) {
+  .logo-marquee-track {
+    gap: 2rem;
+  }
+  .logo-marquee-track img {
+    height: 38px;
+  }
+}
+
 /* Services Section */
 .services-section {
   background: var(--mint);
@@ -1129,7 +1225,7 @@ img {
 .why-visual {
   position: relative;
   aspect-ratio: 4/5;
-  background: var(--forest);
+  background: var(--sage-light);
   border-radius: var(--radius-lg);
   overflow: hidden;
   display: flex;
@@ -1140,7 +1236,7 @@ img {
 .why-visual-overlay {
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse at 40% 60%, rgba(196,92,61,0.15), transparent 60%);
+  background: radial-gradient(ellipse at 40% 60%, rgba(196,92,61,0.08), transparent 60%);
 }
 
 .why-visual-content {
@@ -1154,24 +1250,26 @@ img {
   font-family: var(--font-display);
   font-size: 5rem;
   font-weight: 500;
-  color: white;
+  color: var(--forest-deep);
   line-height: 1;
 }
 
 .why-visual-num span {
-  color: var(--terracotta-light);
+  color: var(--terracotta);
 }
 
 .why-visual-label {
   font-size: 0.9375rem;
-  font-weight: 500;
-  color: rgba(255,255,255,0.7);
+  font-weight: 600;
+  color: var(--forest-deep);
+  opacity: 0.9;
   margin-top: 0.5rem;
 }
 
 .why-visual-sub {
   font-size: 0.75rem;
-  color: rgba(255,255,255,0.4);
+  color: var(--forest-deep);
+  opacity: 0.7;
   margin-top: 0.25rem;
 }
 

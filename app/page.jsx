@@ -2,7 +2,7 @@
 
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import QuoteForm from '@/components/QuoteForm';
 import {
   SERVICE_ICONS,
@@ -21,49 +21,29 @@ const SERVICES = [
   {
     slug: 'pompe-a-chaleur',
     title: 'Pompe à chaleur',
-    desc: 'PAC air/eau ou air/air. Installation complète avec jusqu\'à 15 000 € d\'aides cumulables.'
+    desc: 'PAC air/eau ou air/air. Chauffage performant et eau chaude sanitaire avec jusqu\'à 15 000 € d\'aides de l\'État.'
   },
   {
     slug: 'ballon-thermodynamique',
     title: 'Ballon thermodynamique',
-    desc: 'Remplacez votre cumulus. Économies de 70 % sur votre eau chaude sanitaire.'
-  },
-  {
-    slug: 'isolation-interieure',
-    title: 'Isolation intérieure',
-    desc: 'Combles, murs, planchers. Travaux éligibles MaPrimeRénov\' et CEE.'
-  },
-  {
-    slug: 'isolation-exterieure',
-    title: 'Isolation extérieure',
-    desc: 'Façade sans perte de surface. Jusqu\'à 15 000 € d\'aides disponibles.'
-  },
-  {
-    slug: 'vmc',
-    title: 'VMC',
-    desc: 'Simple flux, double flux ou hygroréglable. Air sain et facture réduite.'
+    desc: 'Remplacez votre ancien cumulus. Économisez jusqu\'à 70 % sur votre facture d\'eau chaude sanitaire.'
   },
   {
     slug: 'systeme-solaire-combine',
     title: 'Solaire combiné',
-    desc: 'Chauffage et eau chaude solaire. Couvrez une grande partie de vos besoins.'
+    desc: 'Chauffage et eau chaude grâce à l\'énergie gratuite du soleil. Éligible aux aides MaPrimeRénov\' & CEE.'
   },
   {
-    slug: 'chaudiere-gaz',
-    title: 'Chaudière à gaz',
-    desc: 'Condensation haute performance. Éligible aux certificats CEE.'
-  },
-  {
-    slug: 'renovation-globale',
-    title: 'Rénovation globale',
-    desc: 'MPR Ampleur jusqu\'à 70 000 €. Nous coordonnons l\'ensemble du chantier.'
-  },
+    slug: 'climatisation',
+    title: 'Climatisation réversible',
+    desc: 'Confort optimal été comme hiver. Note : non éligible aux aides MaPrimeRénov\' et CEE (à la charge du client).'
+  }
 ];
 
 const REVIEWS = [
   {
     name: 'Laurent M.',
-    loc: 'Île-de-France',
+    loc: 'ÃŽle-de-France',
     service: 'Pompe à chaleur',
     text: 'Installation rapide, dossier MaPrimeRénov\' géré de A à Z. Équipe sérieuse, je recommande.',
     init: 'LM'
@@ -140,7 +120,6 @@ function useCounterAnimation() {
     return () => observer.disconnect();
   }, []);
 }
-
 export default function HomePage() {
   useRevealAnimation();
   useCounterAnimation();
@@ -152,18 +131,32 @@ export default function HomePage() {
         <HeroSlideshow />
       </section>
 
-      {/* Aide Banner */}
-      <div className="aide-banner">
-        <div className="container">
-          <div className="aide-banner-inner">
-            <p className="aide-banner-text">
-              <strong>MaPrimeRénov&apos; + CEE</strong> — Jusqu&apos;à 70 % de vos travaux couverts.
-              On monte le dossier pour vous.
-            </p>
-            <Link href="/aides-financement" className="aide-banner-cta">
-              Comment ça marche <IconArrowRight style={{ width: 14, height: 14 }} />
-            </Link>
-          </div>
+      {/* Trust Badges Scrolling Marquee */}
+      <div className="logo-marquee-container">
+        <div className="logo-marquee-track">
+          {/* Set 1 */}
+          <img src="/images/maprimerenov.jpg" alt="MaPrimeRénov'" />
+          <img src="/images/cee.jpg" alt="CEE" />
+          <img src="/images/qualipac.jpg" alt="QualiPAC RGE" />
+          <img src="/images/qualibois.jpg" alt="QualiBois RGE" />
+          <img src="/images/qualisol.jpg" alt="QualiSol RGE" />
+          <img src="/images/qualiventilation.png" alt="Quali Ventilation RGE" />
+          
+          {/* Set 2 */}
+          <img src="/images/maprimerenov.jpg" alt="MaPrimeRénov'" />
+          <img src="/images/cee.jpg" alt="CEE" />
+          <img src="/images/qualipac.jpg" alt="QualiPAC RGE" />
+          <img src="/images/qualibois.jpg" alt="QualiBois RGE" />
+          <img src="/images/qualisol.jpg" alt="QualiSol RGE" />
+          <img src="/images/qualiventilation.png" alt="Quali Ventilation RGE" />
+
+          {/* Set 3 */}
+          <img src="/images/maprimerenov.jpg" alt="MaPrimeRénov'" />
+          <img src="/images/cee.jpg" alt="CEE" />
+          <img src="/images/qualipac.jpg" alt="QualiPAC RGE" />
+          <img src="/images/qualibois.jpg" alt="QualiBois RGE" />
+          <img src="/images/qualisol.jpg" alt="QualiSol RGE" />
+          <img src="/images/qualiventilation.png" alt="Quali Ventilation RGE" />
         </div>
       </div>
 
@@ -173,12 +166,12 @@ export default function HomePage() {
           <div className="services-header">
             <span className="eyebrow">Nos prestations</span>
             <h2 className="display-md reveal">
-              8 travaux éligibles aux{' '}
-              <span className="accent">aides de l&apos;État</span>
+              Nos solutions de{' '}
+              <span className="accent">chauffage &amp; climatisation</span>
             </h2>
             <p className="body-lg reveal" style={{ marginTop: '1rem' }}>
-              Chaque intervention est réalisée par nos artisans certifiés RGE.
-              Vos aides sont intégrées directement au devis.
+              Des équipements performants installés par nos artisans certifiés RGE.
+              Aides de l&apos;État (MaPrimeRénov&apos;, CEE) déduites directement de votre devis pour le chauffage.
             </p>
           </div>
 
@@ -221,28 +214,28 @@ export default function HomePage() {
           <div className="before-after-grid">
             {[
               {
-                image: '/images/before-after-exterior-renovation.png',
-                title: 'Rénovation extérieure',
-                desc: 'Façade isolée, finition propre et meilleur confort thermique.',
-                badge: 'ITE + façade'
-              },
-              {
-                image: '/images/before-after-interior-insulation.png',
-                title: 'Confort intérieur',
-                desc: 'Pièce assainie, isolation renforcée et chauffage modernisé.',
-                badge: 'Isolation + PAC'
-              },
-              {
                 image: '/images/worker-pac-ateliers-haussmann.png',
-                title: 'Équipe identifiable',
-                desc: 'Techniciens en T-shirt Ateliers Haussmann sur chantier.',
-                badge: 'QualiPAC'
+                title: 'Pompe à chaleur',
+                desc: 'Installation d\'une pompe à chaleur air/eau performante pour diviser par 3 vos factures.',
+                badge: 'Chauffage RGE'
               },
               {
-                image: '/images/worker-insulation-ateliers-haussmann.png',
-                title: 'Pose professionnelle',
-                desc: 'Travail soigné sur isolation extérieure et rénovation globale.',
-                badge: 'Artisan RGE'
+                image: '/images/realisation-ballon.png',
+                title: 'Ballon thermodynamique',
+                desc: 'Pose d\'un chauffe-eau thermodynamique écologique pour couvrir vos besoins sanitaires.',
+                badge: 'Eau Chaude RGE'
+              },
+              {
+                image: '/images/realisation-solaire.png',
+                title: 'Système solaire combiné',
+                desc: 'Chauffage et eau chaude solaire grâce à des capteurs thermiques à haute efficacité.',
+                badge: 'Solaire RGE'
+              },
+              {
+                image: '/images/realisation-climatisation.png',
+                title: 'Climatisation réversible',
+                desc: 'Confort thermique optimal en été comme en hiver avec une installation split performante.',
+                badge: 'Confort'
               },
             ].map((item, index) => (
               <article
@@ -406,7 +399,7 @@ export default function HomePage() {
                 {
                   icon: IconShield,
                   title: '4 certifications RGE',
-                  desc: 'Quali PAC, Quali Bois, Quali Bat, Quali Sol — les labels qui ouvrent droit aux aides.',
+                  desc: 'Quali PAC, Quali Bois, Quali Ventilation, Quali Sol — les labels qui ouvrent droit aux aides.',
                 },
                 {
                   icon: IconCheck,
@@ -492,7 +485,7 @@ export default function HomePage() {
             {[
               { code: 'PAC', name: 'Quali PAC', spec: 'Pompes à chaleur' },
               { code: 'BOIS', name: 'Quali Bois', spec: 'Chauffage bois' },
-              { code: 'BAT', name: 'Quali Bat', spec: 'Isolation · VMC' },
+              { code: 'VENTIL', name: 'Quali Ventilation', spec: 'Ventilation & VMC' },
               { code: 'SOL', name: 'Quali Sol', spec: 'Solaire thermique' },
             ].map((cert, index) => (
               <div
@@ -551,7 +544,7 @@ export default function HomePage() {
                   '100 % gratuit, sans engagement',
                   'Réponse garantie sous 24h',
                   'Calcul précis de vos aides MPR + CEE',
-                  'Artisan RGE Quali PAC · Bois · Bat · Sol',
+                  'Artisan RGE Quali PAC · Bois · Ventilation · Sol',
                 ].map((perk) => (
                   <div key={perk} className="quote-perk">
                     <IconCheck />
@@ -584,3 +577,4 @@ export default function HomePage() {
     </>
   );
 }
+

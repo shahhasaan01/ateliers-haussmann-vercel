@@ -74,6 +74,7 @@ export default function MentionsLegalesPage() {
                     ['Adresse', '19 rue Gambetta, 93240 Stains'],
                     ['Téléphone', '01 80 89 24 58'],
                     ['E-mail', 'ateliers.haussmann@gmail.com'],
+                    ['SIRET', '99359069400028'],
                     ['Certification', 'RGE (Reconnu Garant de l\'Environnement)'],
                     ['Activité', 'Rénovation énergétique — chauffage, isolation, ventilation'],
                   ].map(([key, val]) => (
@@ -428,7 +429,7 @@ export default function MentionsLegalesPage() {
             {/* Droit applicable */}
             <div
               style={{
-                background: 'linear-gradient(135deg, var(--navy) 0%, #1e3a5f 100%)',
+                background: 'linear-gradient(135deg, var(--forest) 0%, var(--forest-deep) 100%)',
                 borderRadius: '12px',
                 padding: '2rem',
                 color: 'white',

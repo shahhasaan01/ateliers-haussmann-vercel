@@ -7,12 +7,8 @@ import { IconPhone } from '@/components/ServiceIcons';
 const SERVICES = [
   { href: '/pompe-a-chaleur', label: 'Pompe à chaleur' },
   { href: '/ballon-thermodynamique', label: 'Ballon thermodynamique' },
-  { href: '/isolation-interieure', label: 'Isolation intérieure' },
-  { href: '/isolation-exterieure', label: 'Isolation extérieure' },
-  { href: '/vmc', label: 'VMC' },
   { href: '/systeme-solaire-combine', label: 'Système solaire combiné' },
-  { href: '/chaudiere-gaz', label: 'Chaudière à gaz' },
-  { href: '/renovation-globale', label: 'Rénovation globale' },
+  { href: '/climatisation', label: 'Climatisation réversible' },
 ];
 
 export default function Navbar() {
@@ -47,56 +43,17 @@ export default function Navbar() {
 
   return (
     <>
-      {/* RGE Strip - Fixed at top */}
-      <div className="rge-strip">
-        <div className="container--wide">
-          <div className="rge-strip-inner">
-            {['Quali PAC', 'Quali Bois', 'Quali Bat', 'Quali Sol'].map((badge) => (
-              <span key={badge} className="rge-badge">
-                <span className="rge-badge-icon">✓</span>
-                {badge}
-              </span>
-            ))}
-            <span className="rge-strip-text">
-              Artisan{' '}
-              <span className="rge-strip-highlight">RGE Certifié</span>
-            </span>
-            <span className="rge-strip-text">
-              Jusqu&apos;à{' '}
-              <span className="rge-strip-highlight">70% d&apos;aides</span>
-            </span>
-            <a href="tel:0180892458" className="rge-strip-phone">
-              <IconPhone style={{ width: 14, height: 14 }} />
-              01 80 89 24 58
-            </a>
-          </div>
-        </div>
-      </div>
-
       {/* Main Header */}
       <header className={headerClasses} style={headerStyle}>
         <div className="container--wide">
           <div className="header-inner">
             {/* Logo */}
             <Link href="/" className="site-logo">
-              <div className="logo-mark">
-                <svg
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.75"
-                  strokeLinecap="round"
-                >
-                  <path d="M3 20h18M6 20V9l6-5 6 5v11" />
-                  <path d="M9 20v-5h6v5" />
-                </svg>
-              </div>
-              <div className="logo-text">
-                <span className="logo-name">Ateliers Haussmann</span>
-                <span className="logo-tagline">Artisan RGE certifié</span>
-              </div>
+              <img
+                src="/images/logo.png"
+                alt="Ateliers Haussmann"
+                style={{ height: '45px', width: 'auto', display: 'block' }}
+              />
             </Link>
 
             {/* Desktop Navigation */}

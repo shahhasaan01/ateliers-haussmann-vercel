@@ -59,10 +59,10 @@ export default function AidesFinancementPage() {
               }}
             >
               {[
-                { label: 'Ménages très modestes', color: '#0a5c36', bg: '#d4edda', amount: 'Jusqu\'à 70 %', desc: 'du coût des travaux pris en charge' },
-                { label: 'Ménages modestes', color: '#0d6efd', bg: '#cfe2ff', amount: 'Jusqu\'à 60 %', desc: 'du coût des travaux pris en charge' },
-                { label: 'Ménages intermédiaires', color: '#856404', bg: '#fff3cd', amount: 'Jusqu\'à 45 %', desc: 'du coût des travaux pris en charge' },
-                { label: 'Ménages supérieurs', color: '#495057', bg: '#e9ecef', amount: 'Jusqu\'à 30 %', desc: 'du coût des travaux pris en charge' },
+                { label: 'Ménages très modestes', color: '#2f4a1f', bg: '#dcefce', amount: 'Jusqu\'à 70 %', desc: 'du coût des travaux pris en charge' },
+                { label: 'Ménages modestes', color: '#3f5e2e', bg: '#e7f5dc', amount: 'Jusqu\'à 60 %', desc: 'du coût des travaux pris en charge' },
+                { label: 'Ménages intermédiaires', color: '#8a4b2f', bg: '#f3e3d8', amount: 'Jusqu\'à 45 %', desc: 'du coût des travaux pris en charge' },
+                { label: 'Ménages supérieurs', color: '#5a6b4a', bg: '#e9efe2', amount: 'Jusqu\'à 30 %', desc: 'du coût des travaux pris en charge' },
               ].map((item) => (
                 <div
                   key={item.label}
@@ -207,7 +207,7 @@ export default function AidesFinancementPage() {
           {/* Conditions d'éligibilité */}
           <div
             style={{
-              background: 'linear-gradient(135deg, var(--navy) 0%, #1e3a5f 100%)',
+              background: 'linear-gradient(135deg, var(--forest) 0%, var(--forest-deep) 100%)',
               borderRadius: '16px',
               padding: '2rem',
               color: 'white',

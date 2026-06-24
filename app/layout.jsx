@@ -1,10 +1,21 @@
-import { Fraunces, Source_Sans_3 } from 'next/font/google';
+import { Cormorant_Garamond, Inter } from 'next/font/google';
 import './globals.css';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 
-const fraunces = Fraunces({ subsets: ['latin'], weight: ['500','600','700'], variable: '--font-display' });
-const sourceSans = Source_Sans_3({ subsets: ['latin'], weight: ['400','500','600','700'], variable: '--font-body' });
+const cormorant = Cormorant_Garamond({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
+  style: ['normal', 'italic'],
+  variable: '--font-display',
+  display: 'swap',
+});
+const inter = Inter({
+  subsets: ['latin'],
+  weight: ['300', '400', '500', '600'],
+  variable: '--font-body',
+  display: 'swap',
+});
 
 export const metadata = {
   title: 'Ateliers Haussmann — Artisan RGE Certifié | Pompe à chaleur, Isolation, MaPrimeRénov\'',
@@ -13,7 +24,7 @@ export const metadata = {
   openGraph: {
     title: 'Ateliers Haussmann — Artisan RGE Certifié',
     description: 'Jusqu\'à 70% d\'aides pour vos travaux de rénovation énergétique. Devis gratuit.',
-    url: 'https://ateliers-haussmann.vercel.app',
+    url: 'https://ateliers-haussmann-3d.vercel.app',
     siteName: 'Ateliers Haussmann',
     locale: 'fr_FR',
     type: 'website',
@@ -22,7 +33,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="fr" className={`${fraunces.variable} ${sourceSans.variable}`}>
+    <html lang="fr" className={`${cormorant.variable} ${inter.variable}`}>
       <head>
         <link rel="icon" href="/favicon.ico" />
         <meta name="theme-color" content="#1B2E22" />

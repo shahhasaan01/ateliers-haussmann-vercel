@@ -2,192 +2,71 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import Link from 'next/link';
-import { IconPhone, IconMapPin, IconMail, IconClock, IconArrowRight } from '@/components/ServiceIcons';
+import { IconPhone } from '@/components/ServiceIcons';
 
-// Public assets are checked in so static Vercel exports can serve them reliably.
+// Use Next.js dynamic routing-compatible components
+import LinkComponent from 'next/link';
+
 const SLIDES = [
   {
     id: 1,
-    image: '/images/hero-1.jpg',
-    imagePosition: 'center',
-    alt: 'Maison rénovée avec pompe à chaleur',
-    tagline: 'Artisan RGE Certifié',
-    headline: 'Rénovez votre logement',
-    subheadline: 'jusqu\'à 70% de moins',
-    description: 'Pompe à chaleur, isolation, VMC. On gère votre dossier MaPrimeRénov\' et CEE.',
-    cta: 'Demander un devis',
-    secondaryCta: 'Nos services',
-    stat: '500+',
-    statLabel: 'chantiers réalisés'
+    image: '/images/poster-pac.jpg',
+    alt: 'Divisez Vos Factures de Chauffage par 3 - Pompe à Chaleur - Ateliers Haussmann',
+    links: [
+      {
+        href: '/#contact',
+        style: { left: '23.5%', top: '83.2%', width: '53%', height: '7.2%' },
+        label: 'Demandez votre devis gratuit et personnalisé'
+      },
+      {
+        href: 'tel:0180892458',
+        style: { left: '56%', top: '94.5%', width: '17%', height: '3.5%' },
+        label: 'Appeler le 01 80 89 24 58'
+      }
+    ],
+    fallbackLink: '/pompe-a-chaleur'
   },
   {
     id: 2,
-    image: '/images/worker-pac-ateliers-haussmann.png',
-    imagePosition: 'center 42%',
-    alt: 'Techniciens Ateliers Haussmann installant une pompe à chaleur',
-    tagline: 'QualiPAC Certifié',
-    headline: 'Pompe à chaleur',
-    subheadline: 'air/eau & air/air',
-    description: 'Nos équipes installent votre PAC avec matériel professionnel et finitions propres.',
-    cta: 'En savoir plus',
-    secondaryCta: 'Voir les aides',
-    stat: '70%',
-    statLabel: 'd\'économies d\'énergie'
+    image: '/images/poster-ballon.jpg',
+    alt: 'Jusqu\'à 75% d\'Énergie Gratuite pour Votre Eau Chaude - Ateliers Haussmann',
+    links: [
+      {
+        href: '/ballon-thermodynamique',
+        style: { left: '24.2%', top: '87.1%', width: '51.8%', height: '5.8%' },
+        label: 'Remplacez votre ancien cumulus dès aujourd\'hui'
+      }
+    ],
+    fallbackLink: '/ballon-thermodynamique'
   },
   {
     id: 3,
-    image: '/images/worker-insulation-ateliers-haussmann.png',
-    imagePosition: 'center',
-    alt: 'Techniciens Ateliers Haussmann posant une isolation extérieure',
-    tagline: 'Isolation performante',
-    headline: 'Isolation intérieure',
-    subheadline: '& extérieure',
-    description: 'Isolation de façade, combles, murs et planchers avec artisans RGE identifiables.',
-    cta: 'Découvrir',
-    secondaryCta: 'Nos réalisations',
-    stat: '10 000€',
-    statLabel: 'd\'aides disponibles'
-  },
-  {
-    id: 4,
-    image: '/images/hero-4.jpg',
-    imagePosition: 'center 45%',
-    alt: 'Maison éco-rénovée',
-    tagline: 'Rénovation globale',
-    headline: 'MPR Ampleur',
-    subheadline: 'jusqu\'à 70 000€',
-    description: 'Coordination complète de votre chantier. Une seule entreprise, un seul interlocuteur.',
-    cta: 'Étude gratuite',
-    secondaryCta: 'Comment ça marche',
-    stat: '24h',
-    statLabel: 'délai de réponse'
-  },
-  {
-    id: 5,
-    image: '/images/hero-5.jpg',
-    imagePosition: 'center',
-    alt: 'Ballon thermodynamique',
-    tagline: 'Eau chaude sanitaire',
-    headline: 'Ballon thermodynamique',
-    subheadline: 'économies garanties',
-    description: 'Remplacez votre cumulus. 70% d\'économies sur votre eau chaude.',
-    cta: 'Devis gratuit',
-    secondaryCta: 'Nos produits',
-    stat: '70%',
-    statLabel: 'd\'économies ECS'
-  },
-  {
-    id: 6,
-    image: '/images/before-after-exterior-renovation.png',
-    imagePosition: 'center 38%',
-    alt: 'Avant après rénovation extérieure',
-    tagline: 'Avant / Après',
-    headline: 'Des résultats',
-    subheadline: 'visibles',
-    description: 'Façade rénovée, isolation renforcée et valeur du logement améliorée.',
-    cta: 'Voir un résultat',
-    secondaryCta: 'Nous contacter',
-    stat: '4',
-    statLabel: 'certifications RGE'
-  },
-  {
-    id: 7,
-    image: '/images/before-after-interior-insulation.png',
-    imagePosition: 'center',
-    alt: 'Avant après rénovation intérieure avec isolation',
-    tagline: 'Confort intérieur',
-    headline: 'Avant / Après',
-    subheadline: 'confort immédiat',
-    description: 'Un logement plus chaud, plus sain et plus économique après rénovation.',
-    cta: 'Étude gratuite',
-    secondaryCta: 'Calculer mes aides',
-    stat: '24h',
-    statLabel: 'réponse devis'
+    image: '/images/poster-ssc.jpg',
+    alt: 'Produisez Votre Propre Chauffage Grâce au Soleil - Ateliers Haussmann',
+    links: [
+      {
+        href: '/systeme-solaire-combine',
+        style: { left: '16.2%', top: '88.8%', width: '42.8%', height: '6.4%' },
+        label: 'Passer à l\'autonomie énergétique'
+      },
+      {
+        href: 'tel:0180892458',
+        style: { left: '59.8%', top: '88.8%', width: '23.8%', height: '6.4%' },
+        label: 'Appeler nos experts'
+      }
+    ],
+    fallbackLink: '/systeme-solaire-combine'
   }
 ];
-
-// Ken Burns animation variants
-const imageVariants = {
-  enter: {
-    scale: 1.15,
-    x: 0,
-    opacity: 0,
-  },
-  center: {
-    scale: 1,
-    x: 0,
-    opacity: 1,
-    transition: {
-      duration: 1.5,
-      ease: [0.25, 0.46, 0.45, 0.94],
-    },
-  },
-  exit: {
-    scale: 1.05,
-    x: -30,
-    opacity: 0,
-    transition: {
-      duration: 1,
-      ease: [0.25, 0.46, 0.45, 0.94],
-    },
-  },
-};
-
-const textVariants = {
-  enter: {
-    y: 60,
-    opacity: 0,
-  },
-  center: {
-    y: 0,
-    opacity: 1,
-    transition: {
-      duration: 0.8,
-      delay: 0.4,
-      ease: [0.25, 0.46, 0.45, 0.94],
-    },
-  },
-  exit: {
-    y: -40,
-    opacity: 0,
-    transition: {
-      duration: 0.5,
-      ease: [0.25, 0.46, 0.45, 0.94],
-    },
-  },
-};
-
-const statVariants = {
-  enter: {
-    scale: 0.8,
-    opacity: 0,
-    y: 20,
-  },
-  center: {
-    scale: 1,
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.6,
-      delay: 0.7,
-      ease: [0.25, 0.46, 0.45, 0.94],
-    },
-  },
-  exit: {
-    scale: 0.9,
-    opacity: 0,
-    y: -10,
-    transition: {
-      duration: 0.4,
-    },
-  },
-};
 
 export default function HeroSlideshow() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
   const [direction, setDirection] = useState(1);
+  const [touchStart, setTouchStart] = useState(null);
+  const [touchEnd, setTouchEnd] = useState(null);
+
+  const minSwipeDistance = 50;
 
   const nextSlide = useCallback(() => {
     setDirection(1);
@@ -211,104 +90,101 @@ export default function HeroSlideshow() {
 
     const interval = setInterval(() => {
       nextSlide();
-    }, 6000);
+    }, 7000);
 
     return () => clearInterval(interval);
   }, [isAutoPlaying, nextSlide]);
 
+  const onTouchStart = (e) => {
+    setTouchEnd(null);
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const onTouchMove = (e) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const onTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > minSwipeDistance;
+    const isRightSwipe = distance < -minSwipeDistance;
+    if (isLeftSwipe) {
+      nextSlide();
+    }
+    if (isRightSwipe) {
+      prevSlide();
+    }
+  };
+
   const slide = SLIDES[currentSlide];
 
   return (
-    <div className="hero-slideshow">
-      {/* Background Images with Ken Burns effect */}
-      <AnimatePresence mode="wait" initial={false} custom={direction}>
+    <div 
+      className="hero-slideshow"
+      onTouchStart={onTouchStart}
+      onTouchMove={onTouchMove}
+      onTouchEnd={onTouchEnd}
+    >
+      {/* Background ambient blurred image */}
+      <AnimatePresence mode="wait" initial={false}>
         <motion.div
-          key={slide.id}
-          className="hero-slide-image"
-          custom={direction}
-          variants={imageVariants}
-          initial="enter"
-          animate="center"
-          exit="exit"
+          key={`bg-${slide.id}`}
+          className="hero-slide-bg"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 0.8 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.7 }}
           style={{
             backgroundImage: `url(${slide.image})`,
-            backgroundPosition: slide.imagePosition,
           }}
         />
       </AnimatePresence>
 
-      {/* Dark overlay gradient */}
-      <div className="hero-overlay-gradient" />
+      {/* Dark overlay for ambient background */}
+      <div className="hero-slide-bg-overlay" />
 
-      {/* Grain texture */}
-      <div className="hero-grain" />
+      {/* Foreground Container for the actual Poster */}
+      <div className="hero-poster-container">
+        <AnimatePresence mode="wait" initial={false} custom={direction}>
+          <motion.div
+            key={`fg-${slide.id}`}
+            className="hero-poster-wrapper"
+            custom={direction}
+            initial={{ opacity: 0, x: direction > 0 ? 80 : -80 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: direction > 0 ? -80 : 80 }}
+            transition={{ duration: 0.4, ease: 'easeOut' }}
+          >
+            {/* The main poster image */}
+            <img 
+              src={slide.image} 
+              alt={slide.alt} 
+              className="hero-poster-img"
+              draggable="false"
+            />
 
-      {/* Content */}
-      <div className="hero-content-wrapper">
-        <div className="container hero-container">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={slide.id}
-              className="hero-content-grid"
-              initial="enter"
-              animate="center"
-              exit="exit"
-            >
-              {/* Left: Text Content */}
-              <div className="hero-text-content">
-                <motion.span
-                  className="hero-tagline"
-                  variants={textVariants}
-                >
-                  {slide.tagline}
-                </motion.span>
+            {/* Clickable transparent buttons */}
+            {slide.links.map((link, idx) => (
+              <LinkComponent
+                key={idx}
+                href={link.href}
+                className="hero-poster-link-overlay"
+                style={link.style}
+                title={link.label}
+                aria-label={link.label}
+              />
+            ))}
 
-                <motion.h1 className="hero-headline" variants={textVariants}>
-                  {slide.headline}
-                  <br />
-                  <em className="hero-subheadline">{slide.subheadline}</em>
-                </motion.h1>
-
-                <motion.p className="hero-description" variants={textVariants}>
-                  {slide.description}
-                </motion.p>
-
-                <motion.div className="hero-cta-group" variants={textVariants}>
-                  <Link href="/#contact" className="hero-btn hero-btn-primary">
-                    {slide.cta}
-                    <IconArrowRight style={{ width: 18, height: 18 }} />
-                  </Link>
-                  <Link href="/#services" className="hero-btn hero-btn-secondary">
-                    {slide.secondaryCta}
-                  </Link>
-                </motion.div>
-
-                {/* Contact info - mobile optimized */}
-                <motion.div className="hero-contact-info" variants={textVariants}>
-                  <div className="hero-contact-item">
-                    <IconPhone style={{ width: 16, height: 16 }} />
-                    <span>01 80 89 24 58</span>
-                  </div>
-                  <div className="hero-contact-item">
-                    <IconMapPin style={{ width: 16, height: 16 }} />
-                    <span>Toute la France</span>
-                  </div>
-                </motion.div>
-              </div>
-
-              {/* Right: Stat Card */}
-              <motion.div className="hero-stat-card" variants={statVariants}>
-                <span className="hero-stat-number">{slide.stat}</span>
-                <span className="hero-stat-label">{slide.statLabel}</span>
-                <div className="hero-stat-divider" />
-                <div className="hero-stat-badges">
-                  <span className="hero-badge">RGE</span>
-                  <span className="hero-badge">QualiPAC</span>
-                </div>
-              </motion.div>
-            </motion.div>
-          </AnimatePresence>
-        </div>
+            {/* Fallback overlay (makes the rest of the poster clickable to its primary link) */}
+            <LinkComponent
+              href={slide.fallbackLink}
+              className="hero-poster-fallback-link"
+              title={slide.alt}
+              aria-label={slide.alt}
+            />
+          </motion.div>
+        </AnimatePresence>
       </div>
 
       {/* Navigation Arrows */}
@@ -345,281 +221,105 @@ export default function HeroSlideshow() {
                 className="hero-dot-progress"
                 initial={{ scaleX: 0 }}
                 animate={{ scaleX: 1 }}
-                transition={{ duration: 6, ease: 'linear' }}
+                transition={{ duration: 7, ease: 'linear' }}
               />
             )}
           </button>
         ))}
       </div>
 
-      {/* Company branding watermark */}
-      <div className="hero-watermark">
-        <span>ATELIERS HAUSSMANN</span>
-      </div>
-
-      {/* Scroll indicator */}
-      <motion.div
-        className="hero-scroll-indicator"
-        initial={{ opacity: 0, y: -10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 1.5, duration: 0.6 }}
-      >
-        <span>Découvrir</span>
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-          <path d="M12 5v14M19 12l-7 7-7-7" />
-        </svg>
-      </motion.div>
-
-      {/* Mobile Bottom Info Bar */}
-      <div className="hero-mobile-info">
-        <div className="hero-mobile-contact">
-          <a href="tel:0180892458" className="hero-mobile-btn">
-            <IconPhone style={{ width: 20, height: 20 }} />
-            <span>01 80 89 24 58</span>
-          </a>
-        </div>
-      </div>
-
+      {/* Styles */}
       <style jsx global>{`
         .hero-slideshow {
-          position: absolute;
-          inset: 0;
-          overflow: hidden;
-          background: #0d1612;
-        }
-
-        .hero-slide-image {
-          position: absolute;
-          inset: -5%;
-          width: 110%;
-          height: 110%;
-          background-size: cover;
-          background-position: center;
-          filter: brightness(1.12) saturate(1.08);
-          will-change: transform, opacity;
-        }
-
-        /* Ken Burns zoom animation on active slide */
-        @keyframes kenburns {
-          0% {
-            transform: scale(1.1) translate(0, 0);
-          }
-          100% {
-            transform: scale(1) translate(-2%, -1%);
-          }
-        }
-
-        .hero-slide-image {
-          animation: kenburns 8s ease-out forwards;
-        }
-
-        .hero-overlay-gradient {
-          position: absolute;
-          inset: 0;
-          background: linear-gradient(
-            135deg,
-            rgba(13, 22, 18, 0.58) 0%,
-            rgba(13, 22, 18, 0.24) 52%,
-            rgba(13, 22, 18, 0.5) 100%
-          );
-          z-index: 1;
-        }
-
-        .hero-grain {
-          position: absolute;
-          inset: 0;
-          opacity: 0.04;
-          background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-          pointer-events: none;
-          z-index: 2;
-        }
-
-        .hero-content-wrapper {
           position: relative;
-          z-index: 3;
-          height: 100%;
-          display: flex;
-          align-items: center;
-          padding: 120px 0 100px;
-          min-height: 100%;
-        }
-
-        .hero-container {
           width: 100%;
-        }
-
-        .hero-content-grid {
-          display: grid;
-          grid-template-columns: 1fr auto;
-          gap: 4rem;
-          align-items: center;
-          min-width: 0;
-        }
-
-        .hero-text-content {
-          max-width: 600px;
-          min-width: 0;
-        }
-
-        .hero-tagline {
-          display: inline-block;
-          font-family: 'Inter', system-ui, sans-serif;
-          font-size: 0.75rem;
-          font-weight: 500;
-          letter-spacing: 0.15em;
-          text-transform: uppercase;
-          color: #d4a574;
-          margin-bottom: 1.25rem;
-          padding: 0.5rem 1rem;
-          background: rgba(196, 92, 61, 0.15);
-          border: 1px solid rgba(196, 92, 61, 0.25);
-          border-radius: 4px;
-        }
-
-        .hero-headline {
-          font-family: 'Cormorant Garamond', Georgia, serif;
-          font-size: clamp(2.5rem, 5vw, 4.5rem);
-          font-weight: 500;
-          line-height: 1.05;
-          letter-spacing: -0.02em;
-          color: white;
-          margin-bottom: 1.25rem;
-          overflow-wrap: break-word;
-          text-wrap: balance;
-        }
-
-        .hero-subheadline {
-          font-style: italic;
-          color: #e07a5f;
-        }
-
-        .hero-description {
-          font-family: 'Inter', system-ui, sans-serif;
-          font-size: 1.125rem;
-          line-height: 1.7;
-          color: rgba(255, 255, 255, 0.75);
-          max-width: 480px;
-          margin-bottom: 2rem;
-        }
-
-        .hero-cta-group {
-          display: flex;
-          gap: 1rem;
-          flex-wrap: wrap;
-          margin-bottom: 2rem;
-        }
-
-        .hero-btn {
-          display: inline-flex;
-          align-items: center;
-          gap: 0.5rem;
-          padding: 0.875rem 1.75rem;
-          font-family: 'Inter', system-ui, sans-serif;
-          font-size: 0.9375rem;
-          font-weight: 500;
-          letter-spacing: 0.01em;
-          text-decoration: none;
-          border-radius: 4px;
-          transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
-          cursor: pointer;
-          border: none;
-          min-height: 48px;
-        }
-
-        .hero-btn-primary {
-          background: #c45c3d;
-          color: white;
-        }
-
-        .hero-btn-primary:hover {
-          background: #1a2f1f;
-          transform: translateY(-2px);
-        }
-
-        .hero-btn-secondary {
-          background: transparent;
-          color: white;
-          border: 1px solid rgba(255, 255, 255, 0.3);
-        }
-
-        .hero-btn-secondary:hover {
-          background: rgba(255, 255, 255, 0.1);
-          border-color: rgba(255, 255, 255, 0.5);
-        }
-
-        .hero-contact-info {
-          display: flex;
-          gap: 1.5rem;
-          flex-wrap: wrap;
-        }
-
-        .hero-contact-item {
+          height: 100%;
+          overflow: hidden;
+          background: #0b110e;
           display: flex;
           align-items: center;
-          gap: 0.5rem;
-          font-family: 'Inter', system-ui, sans-serif;
-          font-size: 0.875rem;
-          color: rgba(255, 255, 255, 0.6);
-        }
-
-        .hero-contact-item svg {
-          color: #d4a574;
-        }
-
-        /* Stat Card */
-        .hero-stat-card {
-          background: rgba(255, 255, 255, 0.05);
-          backdrop-filter: blur(10px);
-          border: 1px solid rgba(255, 255, 255, 0.1);
-          border-radius: 12px;
-          padding: 2rem;
-          text-align: center;
-          min-width: 160px;
-        }
-
-        .hero-stat-number {
-          display: block;
-          font-family: 'Cormorant Garamond', Georgia, serif;
-          font-size: 3rem;
-          font-weight: 600;
-          color: #e07a5f;
-          line-height: 1;
-          margin-bottom: 0.5rem;
-        }
-
-        .hero-stat-label {
-          display: block;
-          font-family: 'Inter', system-ui, sans-serif;
-          font-size: 0.75rem;
-          font-weight: 500;
-          letter-spacing: 0.08em;
-          text-transform: uppercase;
-          color: rgba(255, 255, 255, 0.6);
-        }
-
-        .hero-stat-divider {
-          width: 40px;
-          height: 1px;
-          background: rgba(255, 255, 255, 0.2);
-          margin: 1rem auto;
-        }
-
-        .hero-stat-badges {
-          display: flex;
-          gap: 0.5rem;
           justify-content: center;
         }
 
-        .hero-badge {
-          font-family: 'Inter', system-ui, sans-serif;
-          font-size: 0.625rem;
-          font-weight: 600;
-          letter-spacing: 0.08em;
-          text-transform: uppercase;
-          color: rgba(255, 255, 255, 0.8);
-          background: rgba(196, 92, 61, 0.2);
-          padding: 0.25rem 0.5rem;
-          border-radius: 3px;
+        /* Background blur styles */
+        .hero-slide-bg {
+          position: absolute;
+          inset: -30px;
+          background-size: cover;
+          background-position: center;
+          filter: blur(25px) brightness(0.35);
+          z-index: 1;
+          pointer-events: none;
+          transform: scale(1.05);
+        }
+
+        .hero-slide-bg-overlay {
+          position: absolute;
+          inset: 0;
+          background: radial-gradient(circle at center, rgba(13, 22, 18, 0.2) 0%, rgba(11, 17, 14, 0.8) 100%);
+          z-index: 2;
+          pointer-events: none;
+        }
+
+        /* Foreground poster styles */
+        .hero-poster-container {
+          position: relative;
+          z-index: 3;
+          width: 100%;
+          max-width: 1400px;
+          padding: 100px 2.5rem 60px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+
+        .hero-poster-wrapper {
+          position: relative;
+          width: min(calc(100% - 5rem), calc((100vh - 200px) * 1.5));
+          aspect-ratio: 1024 / 683;
+          box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.7), 0 0 40px rgba(0, 0, 0, 0.2);
+          border-radius: 16px;
+          overflow: hidden;
+          background: #fff;
+          border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .hero-poster-img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          display: block;
+          user-select: none;
+        }
+
+        /* Clickable transparent buttons */
+        .hero-poster-link-overlay {
+          position: absolute;
+          z-index: 10;
+          cursor: pointer;
+          background: transparent;
+          transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.1s ease;
+          border-radius: 9999px;
+          border: 1.5px solid transparent;
+        }
+
+        .hero-poster-link-overlay:hover {
+          background-color: rgba(255, 255, 255, 0.15);
+          box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+          border-color: rgba(255, 255, 255, 0.4);
+          transform: scale(1.02);
+        }
+
+        .hero-poster-link-overlay:active {
+          transform: scale(0.98);
+        }
+
+        /* Fallback link covers the rest of the poster */
+        .hero-poster-fallback-link {
+          position: absolute;
+          inset: 0;
+          z-index: 5;
+          cursor: pointer;
         }
 
         /* Navigation Arrows */
@@ -633,18 +333,19 @@ export default function HeroSlideshow() {
           display: flex;
           align-items: center;
           justify-content: center;
-          background: rgba(255, 255, 255, 0.1);
-          backdrop-filter: blur(4px);
+          background: rgba(255, 255, 255, 0.08);
+          backdrop-filter: blur(8px);
           border: 1px solid rgba(255, 255, 255, 0.15);
           border-radius: 50%;
           color: white;
           cursor: pointer;
-          transition: all 0.3s ease;
+          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .hero-nav-arrow:hover {
-          background: rgba(196, 92, 61, 0.3);
-          border-color: rgba(196, 92, 61, 0.5);
+          background: rgba(255, 255, 255, 0.2);
+          border-color: rgba(255, 255, 255, 0.4);
+          scale: 1.1;
         }
 
         .hero-nav-prev {
@@ -658,7 +359,7 @@ export default function HeroSlideshow() {
         /* Indicators */
         .hero-indicators {
           position: absolute;
-          bottom: 2.5rem;
+          bottom: 2rem;
           left: 50%;
           transform: translateX(-50%);
           z-index: 10;
@@ -693,287 +394,66 @@ export default function HeroSlideshow() {
           transform-origin: left;
         }
 
-        /* Watermark */
-        .hero-watermark {
-          position: absolute;
-          top: 50%;
-          right: -5%;
-          transform: translateY(-50%) rotate(-90deg);
-          z-index: 1;
-          pointer-events: none;
-          opacity: 0.08;
-        }
-
-        .hero-watermark span {
-          font-family: 'Cormorant Garamond', Georgia, serif;
-          font-size: 8rem;
-          font-weight: 600;
-          letter-spacing: 0.1em;
-          color: white;
-          white-space: nowrap;
-        }
-
-        /* Scroll indicator */
-        .hero-scroll-indicator {
-          position: absolute;
-          bottom: 2.5rem;
-          right: 2rem;
-          z-index: 10;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          gap: 0.5rem;
-          color: rgba(255, 255, 255, 0.5);
-          font-family: 'Inter', system-ui, sans-serif;
-          font-size: 0.6875rem;
-          letter-spacing: 0.1em;
-          text-transform: uppercase;
-        }
-
-        .hero-scroll-indicator svg {
-          animation: bounce 2s infinite;
-        }
-
-        @keyframes bounce {
-          0%, 20%, 50%, 80%, 100% {
-            transform: translateY(0);
-          }
-          40% {
-            transform: translateY(8px);
-          }
-          60% {
-            transform: translateY(4px);
-          }
-        }
-
-        /* Mobile Info Bar */
-        .hero-mobile-info {
-          display: none;
-          position: absolute;
-          bottom: 0;
-          left: 0;
-          right: 0;
-          z-index: 100;
-          background: #1a2f1f;
-          padding: 0.75rem 1rem calc(0.75rem + env(safe-area-inset-bottom));
-          border-top: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .hero-mobile-contact {
-          display: flex;
-          justify-content: center;
-        }
-
-        .hero-mobile-btn {
-          display: flex;
-          align-items: center;
-          gap: 0.5rem;
-          font-family: 'Inter', system-ui, sans-serif;
-          font-size: 0.9375rem;
-          font-weight: 500;
-          color: white;
-          text-decoration: none;
-          padding: 0.5rem 1.25rem;
-          background: #c45c3d;
-          border-radius: 4px;
-        }
-
-        /* ======================== */
-        /* MOBILE RESPONSIVE */
-        /* ======================== */
-        
+        /* Responsive Layout fixes */
         @media (max-width: 1200px) {
-          .hero-content-grid {
-            gap: 3rem;
-          }
-          
-          .hero-watermark {
-            display: none;
+          .hero-poster-container {
+            max-width: 950px;
           }
         }
 
         @media (max-width: 992px) {
-          .hero-content-wrapper {
-            padding: 100px 0 120px;
+          .hero-poster-container {
+            max-width: 720px;
+            padding: 90px 1.5rem 50px;
           }
-          
-          .hero-content-grid {
-            grid-template-columns: 1fr;
-            gap: 2rem;
-            text-align: center;
-          }
-          
-          .hero-text-content {
-            max-width: 100%;
-            order: 1;
-          }
-          
-          .hero-headline {
-            font-size: clamp(2rem, 8vw, 3rem);
-          }
-          
-          .hero-description {
-            margin-left: auto;
-            margin-right: auto;
-          }
-          
-          .hero-cta-group {
-            justify-content: center;
-          }
-          
-          .hero-contact-info {
-            justify-content: center;
-          }
-          
-          .hero-stat-card {
-            order: 2;
-            margin: 0 auto;
-            padding: 1.5rem;
-            min-width: 140px;
-          }
-          
-          .hero-stat-number {
-            font-size: 2.5rem;
-          }
-          
           .hero-nav-arrow {
             width: 40px;
             height: 40px;
           }
-          
           .hero-nav-prev {
             left: 1rem;
           }
-          
           .hero-nav-next {
             right: 1rem;
           }
         }
 
         @media (max-width: 768px) {
-          .hero-content-wrapper {
-            padding: calc(var(--rge-height, 36px) + var(--nav-height, 80px) + 1.25rem) 0 8.5rem;
-            align-items: center;
+          /* Force auto-height for hero section on mobile devices to fit the 3:2 aspect ratio of the poster perfectly */
+          .hero {
+            min-height: auto !important;
+            height: auto !important;
+            padding-top: calc(var(--rge-height, 36px) + var(--nav-height, 68px)) !important;
+            display: block !important;
           }
 
-          .hero-container {
-            padding-inline: 1rem;
+          .hero-slideshow {
+            height: auto !important;
+            aspect-ratio: 1024 / 683 !important;
           }
 
-          .hero-content-grid {
-            gap: 1.25rem;
+          .hero-poster-container {
+            padding: 0 !important;
+            max-width: 100% !important;
           }
 
-          .hero-text-content {
-            width: min(100%, 36rem);
-            margin-inline: auto;
+          .hero-poster-wrapper {
+            border-radius: 0;
+            border: none;
+            box-shadow: none;
           }
-          
-          .hero-headline {
-            font-size: clamp(2rem, 10vw, 2.75rem);
-            line-height: 0.98;
-            margin-bottom: 1rem;
-          }
-          
-          .hero-description {
-            font-size: 0.98rem;
-            line-height: 1.55;
-            margin-bottom: 1.5rem;
-            max-width: 34rem;
-          }
-          
-          .hero-cta-group {
-            flex-direction: column;
-            gap: 0.75rem;
-            width: 100%;
-          }
-          
-          .hero-btn {
-            width: 100%;
-            justify-content: center;
-            padding: 0.875rem 1rem;
-          }
-          
-          .hero-contact-info {
-            display: none;
-          }
-          
-          .hero-stat-card {
-            display: none;
-          }
-          
+
           .hero-nav-arrow {
-            display: none;
+            display: none; /* Hide arrows on mobile to prevent overlap with poster text */
           }
-          
+
           .hero-indicators {
-            bottom: 5.75rem;
-            width: calc(100% - 2rem);
-            justify-content: center;
+            bottom: 0.75rem;
           }
           
           .hero-dot {
-            width: min(32px, 12vw);
-            flex: 0 1 32px;
-          }
-          
-          .hero-scroll-indicator {
-            display: none;
-          }
-          
-          .hero-mobile-info {
-            display: block;
-          }
-        }
-
-        @media (max-width: 480px) {
-          .hero-content-wrapper {
-            padding-top: calc(var(--rge-height, 36px) + var(--nav-height, 68px) + 0.75rem);
-          }
-
-          .hero-headline {
-            font-size: clamp(1.85rem, 12vw, 2.35rem);
-          }
-          
-          .hero-tagline {
-            font-size: 0.6875rem;
-            padding: 0.375rem 0.75rem;
-          }
-          
-          .hero-description {
-            font-size: 0.9375rem;
-          }
-          
-          .hero-indicators {
-            bottom: 5.25rem;
-            gap: 0.5rem;
-          }
-
-          .hero-mobile-btn {
-            width: 100%;
-            justify-content: center;
-          }
-        }
-
-        /* Touch device optimizations */
-        @media (hover: none) {
-          .hero-nav-arrow {
-            opacity: 0.7;
-          }
-          
-          .hero-nav-arrow:active {
-            background: rgba(196, 92, 61, 0.4);
-          }
-        }
-
-        /* Reduced motion */
-        @media (prefers-reduced-motion: reduce) {
-          .hero-slide-image {
-            animation: none;
-          }
-          
-          .hero-scroll-indicator svg {
-            animation: none;
+            width: 25px;
+            height: 2px;
           }
         }
       `}</style>

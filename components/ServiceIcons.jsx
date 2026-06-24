@@ -190,6 +190,15 @@ export function IconChevronDown(props) {
   );
 }
 
+export function IconClim(props) {
+  return (
+    <svg viewBox="0 0 24 24" {...defaultProps} {...props}>
+      <path d="M12 2v20M2 12h20M4.93 4.93l14.14 14.14M4.93 19.07l14.14-14.14" />
+      <path d="M12 5l-3 3m3-3l3 3M12 19l-3-3m3 3l3-3M5 12l3-3m-3 3l3 3m14-3l-3-3m3 3l-3 3" />
+    </svg>
+  );
+}
+
 // Service icon mapping
 export const SERVICE_ICONS = {
   'pompe-a-chaleur': IconHeatPump,
@@ -200,6 +209,7 @@ export const SERVICE_ICONS = {
   'systeme-solaire-combine': IconSolar,
   'chaudiere-gaz': IconBoiler,
   'renovation-globale': IconRenovation,
+  'climatisation': IconClim,
 };
 
 export default SERVICE_ICONS;

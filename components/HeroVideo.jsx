@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -35,7 +35,7 @@ const SLIDES = [
     overlayColor: 'rgba(13, 24, 18, 0.5)',
     tagline: 'Artisan certifié',
     headline: '4 certifications RGE.',
-    subheadline: 'Quali PAC · Bois · Bat · Sol',
+    subheadline: 'Quali PAC · Bois · Ventilation · Sol',
     description: 'Qualité vérifiée par des audits indépendants. Garantie décennale. Intervention sur toute la France.',
     stat: '4',
     statLabel: 'certifications actives',
@@ -322,7 +322,7 @@ export default function HeroVideo() {
         }
 
         .hero-video-headline {
-          font-family: 'Cormorant Garamond', Georgia, serif;
+          font-family: var(--font-display);
           font-size: clamp(2.5rem, 5vw, 4rem);
           font-weight: 500;
           line-height: 1.05;
@@ -337,7 +337,7 @@ export default function HeroVideo() {
         }
 
         .hero-video-description {
-          font-family: 'Inter', system-ui, sans-serif;
+          font-family: var(--font-body);
           font-size: 1.0625rem;
           line-height: 1.7;
           color: rgba(255, 255, 255, 0.7);
@@ -358,7 +358,7 @@ export default function HeroVideo() {
         }
 
         .hero-video-stat-number {
-          font-family: 'Cormorant Garamond', Georgia, serif;
+          font-family: var(--font-display);
           font-size: 2.5rem;
           font-weight: 600;
           color: #e07a5f;
@@ -366,7 +366,7 @@ export default function HeroVideo() {
         }
 
         .hero-video-stat-label {
-          font-family: 'Inter', system-ui, sans-serif;
+          font-family: var(--font-body);
           font-size: 0.75rem;
           font-weight: 500;
           letter-spacing: 0.08em;
@@ -467,3 +467,4 @@ export default function HeroVideo() {
     </div>
   );
 }
+

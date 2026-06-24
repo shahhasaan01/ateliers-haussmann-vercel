@@ -10,12 +10,8 @@ import {
 const SERVICES = [
   { href: '/pompe-a-chaleur', label: 'Pompe à chaleur' },
   { href: '/ballon-thermodynamique', label: 'Ballon thermodynamique' },
-  { href: '/isolation-interieure', label: 'Isolation intérieure' },
-  { href: '/isolation-exterieure', label: 'Isolation extérieure' },
-  { href: '/vmc', label: 'VMC' },
   { href: '/systeme-solaire-combine', label: 'Système solaire combiné' },
-  { href: '/chaudiere-gaz', label: 'Chaudière à gaz' },
-  { href: '/renovation-globale', label: 'Rénovation globale' },
+  { href: '/climatisation', label: 'Climatisation réversible' },
 ];
 
 export default function Footer() {
@@ -61,54 +57,19 @@ export default function Footer() {
               <div className="footer-brand">
                 <Link
                   href="/"
+                  className="site-logo"
                   style={{
                     display: 'inline-flex',
                     alignItems: 'center',
-                    gap: '0.75rem',
                     textDecoration: 'none',
-                    marginBottom: '1.25rem',
+                    marginBottom: '1.5rem',
                   }}
                 >
-                  <div
-                    className="logo-mark"
-                    style={{
-                      width: 36,
-                      height: 36,
-                      background: 'var(--terracotta)',
-                      borderRadius: 8,
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                    }}
-                  >
-                    <svg
-                      width="18"
-                      height="18"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="white"
-                      strokeWidth="1.75"
-                      strokeLinecap="round"
-                    >
-                      <path d="M3 20h18M6 20V9l6-5 6 5v11" />
-                      <path d="M9 20v-5h6v5" />
-                    </svg>
-                  </div>
-                  <div>
-                    <div
-                      className="logo-name"
-                      style={{
-                        fontFamily: 'var(--font-display)',
-                        fontSize: '1rem',
-                        fontWeight: 500,
-                        color: 'white',
-                        lineHeight: 1.2,
-                      }}
-                    >
-                      Ateliers Haussmann
-                    </div>
-                    <div className="logo-tagline">Artisan RGE certifié</div>
-                  </div>
+                  <img
+                    src="/images/logo.png"
+                    alt="Ateliers Haussmann"
+                    style={{ height: '45px', width: 'auto', display: 'block' }}
+                  />
                 </Link>
 
                 <p className="footer-brand-desc">
@@ -117,7 +78,7 @@ export default function Footer() {
                 </p>
 
                 <div className="footer-rge-row">
-                  {['Quali PAC', 'Quali Bois', 'Quali Bat', 'Quali Sol'].map(
+                  {['Quali PAC', 'Quali Bois', 'Quali Ventilation', 'Quali Sol'].map(
                     (badge) => (
                       <span key={badge} className="footer-rge-badge">
                         ✓ {badge}
@@ -228,7 +189,7 @@ export default function Footer() {
             <div className="footer-bottom-inner">
               <p className="footer-bottom-text">
                 © {currentYear} Ateliers Haussmann · 19 rue Gambetta, 93240
-                Stains · SIRET en cours
+                Stains · SIRET 99359069400028
               </p>
               <div className="footer-legal-links">
                 <Link href="/mentions-legales" className="footer-legal-link">
@@ -248,3 +209,4 @@ export default function Footer() {
     </>
   );
 }
+
