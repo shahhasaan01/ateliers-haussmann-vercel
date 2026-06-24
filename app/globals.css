@@ -870,8 +870,13 @@ img {
   transform: scale(1.05);
 }
 
-/* Remove white background border from QualiSol logo */
-.logo-marquee-track img[alt="QualiSol RGE"] {
+/* Remove white background from logos that have it */
+.logo-marquee-track img[alt="QualiSol RGE"],
+.logo-marquee-track img[alt="QualiPAC RGE"],
+.logo-marquee-track img[alt="QualiBois RGE"],
+.logo-marquee-track img[alt="Quali Ventilation RGE"],
+.logo-marquee-track img[alt="MaPrimeRénov'"],
+.logo-marquee-track img[alt="CEE"] {
   mix-blend-mode: multiply;
 }
 
