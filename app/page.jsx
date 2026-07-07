@@ -91,69 +91,14 @@ function useRevealAnimation() {
   }, []);
 }
 
-function useCounterAnimation() {
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
-          observer.unobserve(entry.target);
-
-          const el = entry.target;
-          const target = parseFloat(el.dataset.counter);
-          const suffix = el.dataset.suffix || '';
-          const duration = 1600;
-          const startTime = performance.now();
-
-          const tick = (now) => {
-            const progress = Math.min((now - startTime) / duration, 1);
-            const eased = 1 - Math.pow(1 - progress, 3);
-            el.textContent = Math.floor(target * eased) + suffix;
-            if (progress < 1) requestAnimationFrame(tick);
-          };
-
-          requestAnimationFrame(tick);
-        });
-      },
-      { threshold: 0.3 }
-    );
-
-    document.querySelectorAll('[data-counter]').forEach((el) => {
-      observer.observe(el);
-    });
-
-    return () => observer.disconnect();
-  }, []);
-}
 export default function HomePage() {
   useRevealAnimation();
-  useCounterAnimation();
 
   return (
     <>
       {/* Hero Section with Image Slideshow */}
       <section className="hero" id="accueil">
         <HeroSlideshow />
-        <div className="hero-stats">
-          <div className="stats-bar">
-            <div className="stat-item">
-              <div className="stat-num" data-counter="500" data-suffix="+">0+</div>
-              <div className="stat-label">Chantiers réalisés</div>
-            </div>
-            <div className="stat-item">
-              <div className="stat-num" data-counter="70" data-suffix="%">0%</div>
-              <div className="stat-label">D&apos;aides possibles</div>
-            </div>
-            <div className="stat-item">
-              <div className="stat-num" data-counter="4">0</div>
-              <div className="stat-label">Certifications RGE</div>
-            </div>
-            <div className="stat-item">
-              <div className="stat-num">24h</div>
-              <div className="stat-label">Devis gratuit</div>
-            </div>
-          </div>
-        </div>
       </section>
 
       {/* Trust Badges Scrolling Marquee */}

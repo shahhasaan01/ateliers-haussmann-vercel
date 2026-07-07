@@ -4,8 +4,6 @@ import { useState, useEffect, useCallback, useRef } from 'react';
 import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import dynamic from 'next/dynamic';
 import LinkComponent from 'next/link';
-import HeroLeadStrip from '@/components/HeroLeadStrip';
-
 const HeroAmbient3D = dynamic(() => import('@/components/HeroAmbient3D'), { ssr: false });
 
 const SLIDES = [
@@ -194,10 +192,10 @@ export default function HeroSlideshow() {
                   ? { rotateX: posterRotateX, rotateY: posterRotateY }
                   : undefined
               }
-              initial={{ opacity: 0, x: direction > 0 ? 80 : -80 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: direction > 0 ? -80 : 80 }}
-              transition={{ duration: 0.4, ease: 'easeOut' }}
+              initial={{ opacity: 0, scale: 0.985 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.985 }}
+              transition={{ duration: 0.45, ease: 'easeOut' }}
             >
               <div className="hero-poster-glow" aria-hidden="true" />
               <div className="hero-poster-frame" aria-hidden="true" />
@@ -206,6 +204,8 @@ export default function HeroSlideshow() {
                 src={slide.image}
                 alt={slide.alt}
                 className="hero-poster-img"
+                width={1024}
+                height={682}
                 draggable="false"
                 fetchPriority="high"
               />
@@ -272,8 +272,6 @@ export default function HeroSlideshow() {
             ))}
           </div>
         </div>
-
-        <HeroLeadStrip />
       </div>
     </div>
   );

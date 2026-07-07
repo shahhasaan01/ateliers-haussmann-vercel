@@ -3,7 +3,6 @@ import Script from 'next/script';
 import './globals.css';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
-import PromoBanner from '@/components/PromoBanner';
 import StickyMobileCTA from '@/components/StickyMobileCTA';
 import { GA_ID, GADS_ID } from '@/lib/analytics';
 
@@ -120,7 +119,6 @@ export default function RootLayout({ children }) {
       </head>
       <body>
         <a href="#main" className="skip-link">Passer au contenu</a>
-        <PromoBanner />
         <Navbar />
         <main id="main">{children}</main>
         <Footer />

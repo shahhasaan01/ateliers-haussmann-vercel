@@ -77,7 +77,9 @@
   
   /* Layout */
   --nav-height:     80px;
-  --rge-height:     44px;
+  --rge-height:     0px;
+  --hero-chrome:    calc(var(--nav-height) + 4rem);
+  --poster-ratio:   1.502; /* 1024 / 682 */
   --max-width:      1280px;
   --content-width:  720px;
   
@@ -536,9 +538,10 @@ img {
   display: flex;
   flex-direction: column;
   min-height: 100dvh;
-  overflow: hidden;
+  overflow-x: clip;
+  overflow-y: visible;
   background: var(--forest-deep);
-  padding-top: calc(var(--rge-height) + var(--nav-height));
+  padding-top: var(--nav-height);
 }
 
 .hero-canvas-wrap {
@@ -767,7 +770,7 @@ img {
   border-radius: var(--radius-lg);
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
   width: 100%;
-  max-width: min(1024px, calc(100vw - 6rem));
+  max-width: min(1024px, 100%);
 }
 
 .hero-lead-trust {
@@ -856,7 +859,8 @@ img {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  overflow: hidden;
+  overflow-x: clip;
+  overflow-y: visible;
   background: #0b110e;
   perspective: 1200px;
 }
@@ -934,19 +938,24 @@ img {
   position: relative;
   z-index: 3;
   width: 100%;
-  max-width: 1200px;
+  max-width: min(1100px, 100%);
   margin: 0 auto;
-  padding: 1.25rem 1.5rem 1rem;
+  padding: clamp(0.75rem, 2vw, 1.5rem) clamp(1rem, 3vw, 2.5rem) 1rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  box-sizing: border-box;
 }
 
 .hero-poster-stage {
   position: relative;
   width: 100%;
-  max-width: min(1024px, calc(100vw - 6rem), calc((100dvh - 18rem) * 1.502));
+  max-width: min(
+    1024px,
+    100%,
+    calc((100dvh - var(--hero-chrome)) * var(--poster-ratio))
+  );
   margin: 0 auto;
 }
 
@@ -960,7 +969,7 @@ img {
     0 0 120px rgba(196, 92, 61, 0.08);
   border-radius: 20px;
   overflow: hidden;
-  background: #0b110e;
+  background: var(--cream);
   border: 1px solid rgba(255, 255, 255, 0.12);
   transform-style: preserve-3d;
 }
@@ -1001,8 +1010,9 @@ img {
   z-index: 5;
   width: 100%;
   height: 100%;
+  max-width: none;
   object-fit: contain;
-  object-position: center;
+  object-position: center center;
   display: block;
   user-select: none;
 }
@@ -1056,8 +1066,8 @@ img {
   scale: 1.1;
 }
 
-.hero-nav-prev { left: -0.25rem; }
-.hero-nav-next { right: -0.25rem; }
+.hero-nav-prev { left: 0.75rem; }
+.hero-nav-next { right: 0.75rem; }
 
 .hero-indicators {
   display: flex;
@@ -1091,11 +1101,8 @@ img {
 
 @media (min-width: 1200px) {
   .hero-poster-stage {
-    max-width: 1024px;
+    max-width: min(1024px, calc((100dvh - var(--hero-chrome)) * var(--poster-ratio)));
   }
-
-  .hero-nav-prev { left: -2.5rem; }
-  .hero-nav-next { right: -2.5rem; }
 }
 
 @media (max-width: 992px) {
@@ -1104,7 +1111,7 @@ img {
   }
 
   .hero-poster-stage {
-    max-width: calc(100vw - 2rem);
+    max-width: 100%;
   }
 
   .hero-nav-arrow {
@@ -1112,8 +1119,8 @@ img {
     height: 40px;
   }
 
-  .hero-nav-prev { left: 0; }
-  .hero-nav-next { right: 0; }
+  .hero-nav-prev { left: 0.5rem; }
+  .hero-nav-next { right: 0.5rem; }
 
   .hero-lead-strip {
     max-width: 100%;
@@ -1127,6 +1134,7 @@ img {
 
   .hero-slideshow {
     flex: none;
+    min-height: auto;
   }
 
   .hero-poster-container {
@@ -1150,10 +1158,6 @@ img {
   }
 
   .hero-nav-arrow {
-    display: none;
-  }
-
-  .hero-lead-strip {
     display: none;
   }
 
@@ -1185,6 +1189,19 @@ img {
 @media (max-width: 768px) {
   .stats-bar {
     grid-template-columns: repeat(2, 1fr);
+  }
+
+  .stat-item {
+    border-right: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  .stat-item:nth-child(odd) {
+    border-right: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  .stat-item:nth-last-child(-n + 2) {
+    border-bottom: none;
   }
 }
 
@@ -1238,6 +1255,8 @@ img {
 .aide-banner-text {
   font-size: 0.9375rem;
   color: rgba(255,255,255,0.8);
+  text-wrap: balance;
+  max-width: 100%;
 }
 
 .aide-banner-text strong {
@@ -2298,7 +2317,7 @@ img {
 .mobile-nav {
   position: fixed;
   inset: 0;
-  top: var(--rge-height);
+  top: var(--nav-height);
   background: rgba(13,24,18,0.98);
   backdrop-filter: blur(16px);
   z-index: 99;
@@ -2521,7 +2540,7 @@ img {
 
 .service-sidebar {
   position: sticky;
-  top: calc(var(--nav-height) + var(--rge-height) + 2rem);
+  top: calc(var(--nav-height) + 2rem);
 }
 
 .sidebar-card {
