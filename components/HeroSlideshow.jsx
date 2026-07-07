@@ -87,6 +87,16 @@ export default function HeroSlideshow() {
     mouseY.set(0);
   };
 
+  const [canParallax, setCanParallax] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia('(hover: hover) and (pointer: fine)');
+    const update = () => setCanParallax(mq.matches);
+    update();
+    mq.addEventListener('change', update);
+    return () => mq.removeEventListener('change', update);
+  }, []);
+
   const minSwipeDistance = 50;
 
   const nextSlide = useCallback(() => {
@@ -173,417 +183,98 @@ export default function HeroSlideshow() {
 
       {/* Foreground Container for the actual Poster */}
       <div className="hero-poster-container">
-        <AnimatePresence mode="wait" initial={false} custom={direction}>
-          <motion.div
-            key={`fg-${slide.id}`}
-            className="hero-poster-wrapper"
-            custom={direction}
-            style={{ rotateX: posterRotateX, rotateY: posterRotateY }}
-            initial={{ opacity: 0, x: direction > 0 ? 80 : -80 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: direction > 0 ? -80 : 80 }}
-            transition={{ duration: 0.4, ease: 'easeOut' }}
-          >
-            <div className="hero-poster-glow" aria-hidden="true" />
-            <div className="hero-poster-frame" aria-hidden="true" />
+        <div className="hero-poster-stage">
+          <AnimatePresence mode="wait" initial={false} custom={direction}>
+            <motion.div
+              key={`fg-${slide.id}`}
+              className="hero-poster-wrapper"
+              custom={direction}
+              style={
+                canParallax
+                  ? { rotateX: posterRotateX, rotateY: posterRotateY }
+                  : undefined
+              }
+              initial={{ opacity: 0, x: direction > 0 ? 80 : -80 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: direction > 0 ? -80 : 80 }}
+              transition={{ duration: 0.4, ease: 'easeOut' }}
+            >
+              <div className="hero-poster-glow" aria-hidden="true" />
+              <div className="hero-poster-frame" aria-hidden="true" />
 
-            {/* The main poster image */}
-            <img 
-              src={slide.image} 
-              alt={slide.alt} 
-              className="hero-poster-img"
-              draggable="false"
-            />
-
-            {/* Clickable transparent buttons */}
-            {slide.links.map((link, idx) => (
-              <LinkComponent
-                key={idx}
-                href={link.href}
-                className="hero-poster-link-overlay"
-                style={link.style}
-                title={link.label}
-                aria-label={link.label}
+              <img
+                src={slide.image}
+                alt={slide.alt}
+                className="hero-poster-img"
+                draggable="false"
+                fetchPriority="high"
               />
-            ))}
 
-            {/* Fallback overlay (makes the rest of the poster clickable to its primary link) */}
-            <LinkComponent
-              href={slide.fallbackLink}
-              className="hero-poster-fallback-link"
-              title={slide.alt}
-              aria-label={slide.alt}
-            />
-          </motion.div>
-        </AnimatePresence>
+              {slide.links.map((link, idx) => (
+                <LinkComponent
+                  key={idx}
+                  href={link.href}
+                  className="hero-poster-link-overlay"
+                  style={link.style}
+                  title={link.label}
+                  aria-label={link.label}
+                />
+              ))}
+
+              <LinkComponent
+                href={slide.fallbackLink}
+                className="hero-poster-fallback-link"
+                title={slide.alt}
+                aria-label={slide.alt}
+              />
+            </motion.div>
+          </AnimatePresence>
+
+          <button
+            className="hero-nav-arrow hero-nav-prev"
+            onClick={prevSlide}
+            aria-label="Image précédente"
+            type="button"
+          >
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M19 12H5M12 19l-7-7 7-7" />
+            </svg>
+          </button>
+          <button
+            className="hero-nav-arrow hero-nav-next"
+            onClick={nextSlide}
+            aria-label="Image suivante"
+            type="button"
+          >
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M5 12h14M12 5l7 7-7 7" />
+            </svg>
+          </button>
+
+          <div className="hero-indicators">
+            {SLIDES.map((_, index) => (
+              <button
+                key={index}
+                className={`hero-dot ${index === currentSlide ? 'active' : ''}`}
+                onClick={() => goToSlide(index)}
+                aria-label={`Aller à l'image ${index + 1}`}
+                type="button"
+              >
+                {index === currentSlide && (
+                  <motion.div
+                    className="hero-dot-progress"
+                    initial={{ scaleX: 0 }}
+                    animate={{ scaleX: 1 }}
+                    transition={{ duration: 7, ease: 'linear' }}
+                  />
+                )}
+              </button>
+            ))}
+          </div>
+        </div>
 
         <HeroLeadStrip />
       </div>
-
-      {/* Navigation Arrows */}
-      <button
-        className="hero-nav-arrow hero-nav-prev"
-        onClick={prevSlide}
-        aria-label="Image précédente"
-      >
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-          <path d="M19 12H5M12 19l-7-7 7-7" />
-        </svg>
-      </button>
-      <button
-        className="hero-nav-arrow hero-nav-next"
-        onClick={nextSlide}
-        aria-label="Image suivante"
-      >
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-          <path d="M5 12h14M12 5l7 7-7 7" />
-        </svg>
-      </button>
-
-      {/* Slide Indicators */}
-      <div className="hero-indicators">
-        {SLIDES.map((_, index) => (
-          <button
-            key={index}
-            className={`hero-dot ${index === currentSlide ? 'active' : ''}`}
-            onClick={() => goToSlide(index)}
-            aria-label={`Aller à l'image ${index + 1}`}
-          >
-            {index === currentSlide && (
-              <motion.div
-                className="hero-dot-progress"
-                initial={{ scaleX: 0 }}
-                animate={{ scaleX: 1 }}
-                transition={{ duration: 7, ease: 'linear' }}
-              />
-            )}
-          </button>
-        ))}
-      </div>
-
-      {/* Styles */}
-      <style jsx global>{`
-        .hero-slideshow {
-          position: relative;
-          width: 100%;
-          height: 100%;
-          overflow: hidden;
-          background: #0b110e;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          perspective: 1200px;
-        }
-
-        .hero-ambient-canvas,
-        .hero-ambient-fallback {
-          position: absolute;
-          inset: 0;
-          z-index: 0;
-          pointer-events: none;
-        }
-
-        .hero-ambient-fallback {
-          overflow: hidden;
-        }
-
-        .hero-ambient-glow {
-          position: absolute;
-          border-radius: 50%;
-          filter: blur(80px);
-          opacity: 0.35;
-          animation: heroGlowDrift 12s ease-in-out infinite alternate;
-        }
-
-        .hero-ambient-glow--sage {
-          width: 420px;
-          height: 420px;
-          background: #7A9E69;
-          top: 10%;
-          left: -5%;
-        }
-
-        .hero-ambient-glow--terra {
-          width: 360px;
-          height: 360px;
-          background: #c45c3d;
-          bottom: 5%;
-          right: -3%;
-          animation-delay: -4s;
-        }
-
-        @keyframes heroGlowDrift {
-          from { transform: translate(0, 0) scale(1); }
-          to { transform: translate(30px, -20px) scale(1.08); }
-        }
-
-        .hero-vignette-radial {
-          position: absolute;
-          inset: 0;
-          z-index: 2;
-          pointer-events: none;
-          background: radial-gradient(ellipse at center, transparent 35%, rgba(11, 17, 14, 0.65) 100%);
-        }
-
-        /* Background blur styles */
-        .hero-slide-bg {
-          position: absolute;
-          inset: -30px;
-          background-size: cover;
-          background-position: center;
-          filter: blur(25px) brightness(0.35);
-          z-index: 1;
-          pointer-events: none;
-          transform: scale(1.05);
-        }
-
-        .hero-slide-bg-overlay {
-          position: absolute;
-          inset: 0;
-          background: radial-gradient(circle at center, rgba(13, 22, 18, 0.2) 0%, rgba(11, 17, 14, 0.8) 100%);
-          z-index: 2;
-          pointer-events: none;
-        }
-
-        /* Foreground poster styles */
-        .hero-poster-container {
-          position: relative;
-          z-index: 3;
-          width: 100%;
-          max-width: 1400px;
-          padding: calc(var(--rge-height, 44px) + var(--nav-height, 80px) + 20px) 2.5rem 7rem;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-        }
-
-        .hero-poster-wrapper {
-          position: relative;
-          width: min(calc(100% - 5rem), calc((100vh - 200px) * 1.5));
-          aspect-ratio: 1024 / 683;
-          box-shadow:
-            0 30px 60px -15px rgba(0, 0, 0, 0.7),
-            0 0 60px rgba(122, 158, 105, 0.12),
-            0 0 120px rgba(196, 92, 61, 0.08);
-          border-radius: 20px;
-          overflow: hidden;
-          background: #fff;
-          border: 1px solid rgba(255, 255, 255, 0.12);
-          transform-style: preserve-3d;
-          will-change: transform;
-        }
-
-        .hero-poster-glow {
-          position: absolute;
-          inset: -2px;
-          z-index: 0;
-          border-radius: 22px;
-          background: linear-gradient(
-            135deg,
-            rgba(155, 191, 136, 0.45) 0%,
-            rgba(196, 92, 61, 0.35) 50%,
-            rgba(122, 158, 105, 0.4) 100%
-          );
-          opacity: 0.55;
-          filter: blur(12px);
-          animation: posterGlowPulse 4s ease-in-out infinite alternate;
-        }
-
-        .hero-poster-frame {
-          position: absolute;
-          inset: 0;
-          z-index: 15;
-          border-radius: 20px;
-          border: 1px solid rgba(255, 255, 255, 0.18);
-          pointer-events: none;
-          box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15);
-        }
-
-        @keyframes posterGlowPulse {
-          from { opacity: 0.4; }
-          to { opacity: 0.7; }
-        }
-
-        .hero-poster-img {
-          position: relative;
-          z-index: 5;
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-          display: block;
-          user-select: none;
-        }
-
-        /* Clickable transparent buttons */
-        .hero-poster-link-overlay {
-          position: absolute;
-          z-index: 10;
-          cursor: pointer;
-          background: transparent;
-          transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.1s ease;
-          border-radius: 9999px;
-          border: 1.5px solid transparent;
-        }
-
-        .hero-poster-link-overlay:hover {
-          background-color: rgba(255, 255, 255, 0.15);
-          box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
-          border-color: rgba(255, 255, 255, 0.4);
-          transform: scale(1.02);
-        }
-
-        .hero-poster-link-overlay:active {
-          transform: scale(0.98);
-        }
-
-        /* Fallback link covers the rest of the poster */
-        .hero-poster-fallback-link {
-          position: absolute;
-          inset: 0;
-          z-index: 5;
-          cursor: pointer;
-        }
-
-        /* Navigation Arrows */
-        .hero-nav-arrow {
-          position: absolute;
-          top: 50%;
-          transform: translateY(-50%);
-          z-index: 10;
-          width: 48px;
-          height: 48px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          background: rgba(255, 255, 255, 0.08);
-          backdrop-filter: blur(8px);
-          border: 1px solid rgba(255, 255, 255, 0.15);
-          border-radius: 50%;
-          color: white;
-          cursor: pointer;
-          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .hero-nav-arrow:hover {
-          background: rgba(255, 255, 255, 0.2);
-          border-color: rgba(255, 255, 255, 0.4);
-          scale: 1.1;
-        }
-
-        .hero-nav-prev {
-          left: 2rem;
-        }
-
-        .hero-nav-next {
-          right: 2rem;
-        }
-
-        /* Indicators */
-        .hero-indicators {
-          position: absolute;
-          bottom: 5.5rem;
-          left: 50%;
-          transform: translateX(-50%);
-          z-index: 10;
-          display: flex;
-          gap: 0.75rem;
-        }
-
-        .hero-dot {
-          width: 40px;
-          height: 3px;
-          background: rgba(255, 255, 255, 0.25);
-          border: none;
-          border-radius: 2px;
-          cursor: pointer;
-          overflow: hidden;
-          position: relative;
-          transition: background 0.3s ease;
-        }
-
-        .hero-dot:hover {
-          background: rgba(255, 255, 255, 0.4);
-        }
-
-        .hero-dot.active {
-          background: rgba(255, 255, 255, 0.35);
-        }
-
-        .hero-dot-progress {
-          position: absolute;
-          inset: 0;
-          background: #c45c3d;
-          transform-origin: left;
-        }
-
-        /* Responsive Layout fixes */
-        @media (max-width: 1200px) {
-          .hero-poster-container {
-            max-width: 950px;
-          }
-        }
-
-        @media (max-width: 992px) {
-          .hero-poster-container {
-            max-width: 720px;
-            padding: 90px 1.5rem 50px;
-          }
-          .hero-nav-arrow {
-            width: 40px;
-            height: 40px;
-          }
-          .hero-nav-prev {
-            left: 1rem;
-          }
-          .hero-nav-next {
-            right: 1rem;
-          }
-        }
-
-        @media (max-width: 768px) {
-          /* Force auto-height for hero section on mobile devices to fit the 3:2 aspect ratio of the poster perfectly */
-          .hero {
-            min-height: auto !important;
-            height: auto !important;
-            padding-top: calc(var(--rge-height, 36px) + var(--nav-height, 68px)) !important;
-            display: block !important;
-          }
-
-          .hero-slideshow {
-            height: auto !important;
-            aspect-ratio: 1024 / 683 !important;
-          }
-
-          .hero-poster-container {
-            padding: 0 !important;
-            max-width: 100% !important;
-          }
-
-          .hero-poster-wrapper {
-            border-radius: 0;
-            border: none;
-            box-shadow: none;
-          }
-
-          .hero-nav-arrow {
-            display: none; /* Hide arrows on mobile to prevent overlap with poster text */
-          }
-
-          .hero-indicators {
-            bottom: 0.75rem;
-          }
-
-          .hero-lead-strip {
-            display: none;
-          }
-          
-          .hero-dot {
-            width: 25px;
-            height: 2px;
-          }
-        }
-      `}</style>
     </div>
   );
 }
