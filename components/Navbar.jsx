@@ -5,20 +5,11 @@ import Link from 'next/link';
 import { IconPhone } from '@/components/ServiceIcons';
 import PhoneLink from '@/components/PhoneLink';
 
-const MOBILE_SERVICES = [
+const SERVICES = [
   { href: '/pompe-a-chaleur', label: 'Pompe à chaleur' },
   { href: '/ballon-thermodynamique', label: 'Ballon thermodynamique' },
   { href: '/systeme-solaire-combine', label: 'Système solaire combiné' },
   { href: '/climatisation', label: 'Climatisation réversible' },
-];
-
-const SERVICES = [
-  ...MOBILE_SERVICES,
-  { href: '/vmc', label: 'VMC' },
-  { href: '/chaudiere-gaz', label: 'Chaudière à condensation' },
-  { href: '/isolation-interieure', label: 'Isolation intérieure' },
-  { href: '/isolation-exterieure', label: 'Isolation extérieure' },
-  { href: '/renovation-globale', label: 'Rénovation globale' },
 ];
 
 export default function Navbar() {
@@ -170,7 +161,7 @@ export default function Navbar() {
           >
             Services
           </div>
-          {MOBILE_SERVICES.map((service) => (
+          {SERVICES.map((service) => (
             <Link
               key={service.href}
               href={service.href}
