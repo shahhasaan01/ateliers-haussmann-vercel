@@ -95,15 +95,9 @@ export default function RootLayout({ children }) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }}
         />
         <Script
-          src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
+          src={`https://www.googletagmanager.com/gtag/js?id=${GADS_ID}`}
           strategy="afterInteractive"
         />
-        {GADS_ID && (
-          <Script
-            src={`https://www.googletagmanager.com/gtag/js?id=${GADS_ID}`}
-            strategy="afterInteractive"
-          />
-        )}
         <Script id="google-analytics" strategy="afterInteractive">
           {`
             window.dataLayer = window.dataLayer || [];
@@ -113,7 +107,7 @@ export default function RootLayout({ children }) {
               page_path: window.location.pathname,
               send_page_view: true
             });
-            ${GADS_ID ? `gtag('config', '${GADS_ID}');` : ''}
+            gtag('config', '${GADS_ID}');
           `}
         </Script>
       </head>

@@ -5,7 +5,7 @@
 | Service | ID | Statut |
 |---------|-----|--------|
 | Google Analytics 4 | `G-TSYW641PEE` | ✅ Actif |
-| Google Ads | `AW-XXXXXXXXX` | ⏳ À configurer |
+| Google Ads | `AW-18172764342` | ✅ Actif |
 
 ## Étape 1 — Créer le compte Google Ads
 
@@ -52,7 +52,7 @@ Créez un fichier `.env.local` à la racine du projet :
 
 ```env
 NEXT_PUBLIC_GA_ID=G-TSYW641PEE
-NEXT_PUBLIC_GADS_ID=AW-XXXXXXXXX
+NEXT_PUBLIC_GADS_ID=AW-18172764342
 NEXT_PUBLIC_GADS_CONVERSION_LABEL=AbCdEfGhIjK
 ```
 
