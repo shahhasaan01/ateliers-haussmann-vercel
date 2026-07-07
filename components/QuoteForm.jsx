@@ -18,15 +18,17 @@ export default function QuoteForm({ variant = 'dark', service = '' }) {
   const handleSubmit = async e => {
     e.preventDefault();
     setStatus('sending');
-    const formspreeKey = process.env.NEXT_PUBLIC_FORMSPREE_KEY || 'xqevbalv';
     try {
-      const res = await fetch(`https://formspree.io/f/${formspreeKey}`, {
+      const res = await fetch('/api/submit-lead', {
         method: 'POST',
-        headers: { 
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify({
+          ...data,
+          sourcePage: window.location.pathname,
+        }),
       });
       if (res.ok) {
         setStatus('done');
