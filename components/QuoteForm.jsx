@@ -1,6 +1,6 @@
 'use client';
 import { useState } from 'react';
-import { trackLead } from '@/lib/analytics';
+import { trackLead, getMetaCookies } from '@/lib/analytics';
 
 const SERVICES_LIST = [
   'Pompe à chaleur',
@@ -30,7 +30,23 @@ export default function QuoteForm({ variant = 'dark', service = '' }) {
       });
       if (res.ok) {
         setStatus('done');
-        trackLead(data.service || 'General');
+        const eventId = crypto.randomUUID();
+        const service = data.service || 'General';
+
+        trackLead(service, eventId);
+
+        const { fbp, fbc } = getMetaCookies();
+        fetch('/api/meta-conversion', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            eventId,
+            ...data,
+            eventSourceUrl: window.location.href,
+            fbp,
+            fbc,
+          }),
+        }).catch(() => {});
       } else {
         setStatus('error');
       }
