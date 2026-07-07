@@ -3,12 +3,18 @@
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { IconPhone } from '@/components/ServiceIcons';
+import PhoneLink from '@/components/PhoneLink';
 
 const SERVICES = [
   { href: '/pompe-a-chaleur', label: 'Pompe à chaleur' },
   { href: '/ballon-thermodynamique', label: 'Ballon thermodynamique' },
   { href: '/systeme-solaire-combine', label: 'Système solaire combiné' },
   { href: '/climatisation', label: 'Climatisation réversible' },
+  { href: '/vmc', label: 'VMC' },
+  { href: '/chaudiere-gaz', label: 'Chaudière à condensation' },
+  { href: '/isolation-interieure', label: 'Isolation intérieure' },
+  { href: '/isolation-exterieure', label: 'Isolation extérieure' },
+  { href: '/renovation-globale', label: 'Rénovation globale' },
 ];
 
 export default function Navbar() {
@@ -87,10 +93,10 @@ export default function Navbar() {
 
             {/* CTA Buttons */}
             <div className="header-cta">
-              <a href="tel:0180892458" className="header-phone">
+              <PhoneLink source="header" className="header-phone">
                 <IconPhone style={{ width: 14, height: 14 }} />
                 01 80 89 24 58
-              </a>
+              </PhoneLink>
               <Link href="/#contact" className="btn btn-primary btn-sm">
                 Devis gratuit
               </Link>
@@ -180,14 +186,14 @@ export default function Navbar() {
         </nav>
 
         <div style={{ marginTop: '2rem', display: 'grid', gap: '0.75rem' }}>
-          <a
-            href="tel:0180892458"
+          <PhoneLink
+            source="mobile_nav"
             className="btn btn-outline-white btn-lg"
             style={{ justifyContent: 'center' }}
           >
             <IconPhone style={{ width: 16, height: 16 }} />
             01 80 89 24 58
-          </a>
+          </PhoneLink>
           <Link
             href="/#contact"
             className="btn btn-primary btn-lg"

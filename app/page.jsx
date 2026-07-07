@@ -4,6 +4,7 @@ import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import QuoteForm from '@/components/QuoteForm';
+import PhoneLink from '@/components/PhoneLink';
 import {
   SERVICE_ICONS,
   IconCheck,
@@ -21,29 +22,33 @@ const SERVICES = [
   {
     slug: 'pompe-a-chaleur',
     title: 'Pompe à chaleur',
-    desc: 'PAC air/eau ou air/air. Chauffage performant et eau chaude sanitaire avec jusqu\'à 15 000 € d\'aides de l\'État.'
+    desc: 'PAC air/eau ou air/air. Chauffage performant et eau chaude sanitaire avec jusqu\'à 15 000 € d\'aides de l\'État.',
+    image: '/images/worker-pac-ateliers-haussmann.png'
   },
   {
     slug: 'ballon-thermodynamique',
     title: 'Ballon thermodynamique',
-    desc: 'Remplacez votre ancien cumulus. Économisez jusqu\'à 70 % sur votre facture d\'eau chaude sanitaire.'
+    desc: 'Remplacez votre ancien cumulus. Économisez jusqu\'à 70 % sur votre facture d\'eau chaude sanitaire.',
+    image: '/images/realisation-ballon.png'
   },
   {
     slug: 'systeme-solaire-combine',
     title: 'Solaire combiné',
-    desc: 'Chauffage et eau chaude grâce à l\'énergie gratuite du soleil. Éligible aux aides MaPrimeRénov\' & CEE.'
+    desc: 'Chauffage et eau chaude grâce à l\'énergie gratuite du soleil. Éligible aux aides MaPrimeRénov\' & CEE.',
+    image: '/images/realisation-solaire.png'
   },
   {
     slug: 'climatisation',
     title: 'Climatisation réversible',
-    desc: 'Confort optimal été comme hiver. Note : non éligible aux aides MaPrimeRénov\' et CEE (à la charge du client).'
+    desc: 'Confort optimal été comme hiver. Note : non éligible aux aides MaPrimeRénov\' et CEE (à la charge du client).',
+    image: '/images/realisation-climatisation.png'
   }
 ];
 
 const REVIEWS = [
   {
     name: 'Laurent M.',
-    loc: 'ÃŽle-de-France',
+    loc: 'Île-de-France',
     service: 'Pompe à chaleur',
     text: 'Installation rapide, dossier MaPrimeRénov\' géré de A à Z. Équipe sérieuse, je recommande.',
     init: 'LM'
@@ -129,6 +134,26 @@ export default function HomePage() {
       {/* Hero Section with Image Slideshow */}
       <section className="hero" id="accueil">
         <HeroSlideshow />
+        <div className="hero-stats">
+          <div className="stats-bar">
+            <div className="stat-item">
+              <div className="stat-num" data-counter="500" data-suffix="+">0+</div>
+              <div className="stat-label">Chantiers réalisés</div>
+            </div>
+            <div className="stat-item">
+              <div className="stat-num" data-counter="70" data-suffix="%">0%</div>
+              <div className="stat-label">D&apos;aides possibles</div>
+            </div>
+            <div className="stat-item">
+              <div className="stat-num" data-counter="4">0</div>
+              <div className="stat-label">Certifications RGE</div>
+            </div>
+            <div className="stat-item">
+              <div className="stat-num">24h</div>
+              <div className="stat-label">Devis gratuit</div>
+            </div>
+          </div>
+        </div>
       </section>
 
       {/* Trust Badges Scrolling Marquee */}
@@ -184,12 +209,19 @@ export default function HomePage() {
                   href={`/${service.slug}`}
                   className={`service-card reveal reveal-delay-${(index % 4) + 1}`}
                 >
-                  <div className="service-card-icon">{Icon && <Icon />}</div>
-                  <h3>{service.title}</h3>
-                  <p>{service.desc}</p>
-                  <span className="service-card-link">
-                    En savoir plus <IconArrowRight style={{ width: 14, height: 14 }} />
-                  </span>
+                  <div
+                    className="service-card-thumb"
+                    style={{ backgroundImage: `url(${service.image})` }}
+                    aria-hidden="true"
+                  />
+                  <div className="service-card-body">
+                    <div className="service-card-icon">{Icon && <Icon />}</div>
+                    <h3>{service.title}</h3>
+                    <p>{service.desc}</p>
+                    <span className="service-card-link">
+                      En savoir plus <IconArrowRight style={{ width: 14, height: 14 }} />
+                    </span>
+                  </div>
                 </Link>
               );
             })}
@@ -555,10 +587,10 @@ export default function HomePage() {
 
               <div className="quote-phone-box">
                 <p>Préférez-vous appeler ?</p>
-                <a href="tel:0180892458" className="btn btn-primary">
+                <PhoneLink source="quote_section" className="btn btn-primary">
                   <IconPhone style={{ width: 16, height: 16 }} />
                   01 80 89 24 58
-                </a>
+                </PhoneLink>
               </div>
             </div>
 

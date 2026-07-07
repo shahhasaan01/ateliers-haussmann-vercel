@@ -1,11 +1,12 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { IconPhone } from '@/components/ServiceIcons';
-
-// Use Next.js dynamic routing-compatible components
+import { useState, useEffect, useCallback, useRef } from 'react';
+import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from 'framer-motion';
+import dynamic from 'next/dynamic';
 import LinkComponent from 'next/link';
+import HeroLeadStrip from '@/components/HeroLeadStrip';
+
+const HeroAmbient3D = dynamic(() => import('@/components/HeroAmbient3D'), { ssr: false });
 
 const SLIDES = [
   {
@@ -65,6 +66,26 @@ export default function HeroSlideshow() {
   const [direction, setDirection] = useState(1);
   const [touchStart, setTouchStart] = useState(null);
   const [touchEnd, setTouchEnd] = useState(null);
+  const containerRef = useRef(null);
+
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+  const springX = useSpring(mouseX, { stiffness: 80, damping: 20 });
+  const springY = useSpring(mouseY, { stiffness: 80, damping: 20 });
+  const posterRotateY = useTransform(springX, [-0.5, 0.5], [-3, 3]);
+  const posterRotateX = useTransform(springY, [-0.5, 0.5], [2, -2]);
+
+  const handleMouseMove = (e) => {
+    if (!containerRef.current) return;
+    const rect = containerRef.current.getBoundingClientRect();
+    mouseX.set((e.clientX - rect.left) / rect.width - 0.5);
+    mouseY.set((e.clientY - rect.top) / rect.height - 0.5);
+  };
+
+  const handleMouseLeave = () => {
+    mouseX.set(0);
+    mouseY.set(0);
+  };
 
   const minSwipeDistance = 50;
 
@@ -120,12 +141,17 @@ export default function HeroSlideshow() {
   const slide = SLIDES[currentSlide];
 
   return (
-    <div 
+    <div
+      ref={containerRef}
       className="hero-slideshow"
       onTouchStart={onTouchStart}
       onTouchMove={onTouchMove}
       onTouchEnd={onTouchEnd}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
     >
+      <HeroAmbient3D />
+
       {/* Background ambient blurred image */}
       <AnimatePresence mode="wait" initial={false}>
         <motion.div
@@ -143,6 +169,7 @@ export default function HeroSlideshow() {
 
       {/* Dark overlay for ambient background */}
       <div className="hero-slide-bg-overlay" />
+      <div className="hero-vignette-radial" aria-hidden="true" />
 
       {/* Foreground Container for the actual Poster */}
       <div className="hero-poster-container">
@@ -151,11 +178,15 @@ export default function HeroSlideshow() {
             key={`fg-${slide.id}`}
             className="hero-poster-wrapper"
             custom={direction}
+            style={{ rotateX: posterRotateX, rotateY: posterRotateY }}
             initial={{ opacity: 0, x: direction > 0 ? 80 : -80 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: direction > 0 ? -80 : 80 }}
             transition={{ duration: 0.4, ease: 'easeOut' }}
           >
+            <div className="hero-poster-glow" aria-hidden="true" />
+            <div className="hero-poster-frame" aria-hidden="true" />
+
             {/* The main poster image */}
             <img 
               src={slide.image} 
@@ -185,6 +216,8 @@ export default function HeroSlideshow() {
             />
           </motion.div>
         </AnimatePresence>
+
+        <HeroLeadStrip />
       </div>
 
       {/* Navigation Arrows */}
@@ -239,6 +272,57 @@ export default function HeroSlideshow() {
           display: flex;
           align-items: center;
           justify-content: center;
+          perspective: 1200px;
+        }
+
+        .hero-ambient-canvas,
+        .hero-ambient-fallback {
+          position: absolute;
+          inset: 0;
+          z-index: 0;
+          pointer-events: none;
+        }
+
+        .hero-ambient-fallback {
+          overflow: hidden;
+        }
+
+        .hero-ambient-glow {
+          position: absolute;
+          border-radius: 50%;
+          filter: blur(80px);
+          opacity: 0.35;
+          animation: heroGlowDrift 12s ease-in-out infinite alternate;
+        }
+
+        .hero-ambient-glow--sage {
+          width: 420px;
+          height: 420px;
+          background: #7A9E69;
+          top: 10%;
+          left: -5%;
+        }
+
+        .hero-ambient-glow--terra {
+          width: 360px;
+          height: 360px;
+          background: #c45c3d;
+          bottom: 5%;
+          right: -3%;
+          animation-delay: -4s;
+        }
+
+        @keyframes heroGlowDrift {
+          from { transform: translate(0, 0) scale(1); }
+          to { transform: translate(30px, -20px) scale(1.08); }
+        }
+
+        .hero-vignette-radial {
+          position: absolute;
+          inset: 0;
+          z-index: 2;
+          pointer-events: none;
+          background: radial-gradient(ellipse at center, transparent 35%, rgba(11, 17, 14, 0.65) 100%);
         }
 
         /* Background blur styles */
@@ -267,8 +351,9 @@ export default function HeroSlideshow() {
           z-index: 3;
           width: 100%;
           max-width: 1400px;
-          padding: 100px 2.5rem 60px;
+          padding: calc(var(--rge-height, 44px) + var(--nav-height, 80px) + 20px) 2.5rem 7rem;
           display: flex;
+          flex-direction: column;
           justify-content: center;
           align-items: center;
         }
@@ -277,14 +362,52 @@ export default function HeroSlideshow() {
           position: relative;
           width: min(calc(100% - 5rem), calc((100vh - 200px) * 1.5));
           aspect-ratio: 1024 / 683;
-          box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.7), 0 0 40px rgba(0, 0, 0, 0.2);
-          border-radius: 16px;
+          box-shadow:
+            0 30px 60px -15px rgba(0, 0, 0, 0.7),
+            0 0 60px rgba(122, 158, 105, 0.12),
+            0 0 120px rgba(196, 92, 61, 0.08);
+          border-radius: 20px;
           overflow: hidden;
           background: #fff;
-          border: 1px solid rgba(255, 255, 255, 0.1);
+          border: 1px solid rgba(255, 255, 255, 0.12);
+          transform-style: preserve-3d;
+          will-change: transform;
+        }
+
+        .hero-poster-glow {
+          position: absolute;
+          inset: -2px;
+          z-index: 0;
+          border-radius: 22px;
+          background: linear-gradient(
+            135deg,
+            rgba(155, 191, 136, 0.45) 0%,
+            rgba(196, 92, 61, 0.35) 50%,
+            rgba(122, 158, 105, 0.4) 100%
+          );
+          opacity: 0.55;
+          filter: blur(12px);
+          animation: posterGlowPulse 4s ease-in-out infinite alternate;
+        }
+
+        .hero-poster-frame {
+          position: absolute;
+          inset: 0;
+          z-index: 15;
+          border-radius: 20px;
+          border: 1px solid rgba(255, 255, 255, 0.18);
+          pointer-events: none;
+          box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15);
+        }
+
+        @keyframes posterGlowPulse {
+          from { opacity: 0.4; }
+          to { opacity: 0.7; }
         }
 
         .hero-poster-img {
+          position: relative;
+          z-index: 5;
           width: 100%;
           height: 100%;
           object-fit: cover;
@@ -359,7 +482,7 @@ export default function HeroSlideshow() {
         /* Indicators */
         .hero-indicators {
           position: absolute;
-          bottom: 2rem;
+          bottom: 5.5rem;
           left: 50%;
           transform: translateX(-50%);
           z-index: 10;
@@ -449,6 +572,10 @@ export default function HeroSlideshow() {
 
           .hero-indicators {
             bottom: 0.75rem;
+          }
+
+          .hero-lead-strip {
+            display: none;
           }
           
           .hero-dot {

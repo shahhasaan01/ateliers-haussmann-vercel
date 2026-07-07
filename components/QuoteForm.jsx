@@ -1,5 +1,6 @@
 'use client';
 import { useState } from 'react';
+import { trackLead } from '@/lib/analytics';
 
 const SERVICES_LIST = [
   'Pompe à chaleur',
@@ -17,12 +18,22 @@ export default function QuoteForm({ variant = 'dark', service = '' }) {
   const handleSubmit = async e => {
     e.preventDefault();
     setStatus('sending');
+    const formspreeKey = process.env.NEXT_PUBLIC_FORMSPREE_KEY || 'xqevbalv';
     try {
-      const res = await fetch('https://formspree.io/f/xpwzgdkn', {
-        method: 'POST', headers: { Accept: 'application/json' },
-        body: new URLSearchParams(data),
+      const res = await fetch(`https://formspree.io/f/${formspreeKey}`, {
+        method: 'POST',
+        headers: { 
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data),
       });
-      setStatus(res.ok ? 'done' : 'error');
+      if (res.ok) {
+        setStatus('done');
+        trackLead(data.service || 'General');
+      } else {
+        setStatus('error');
+      }
     } catch { setStatus('error'); }
   };
 
