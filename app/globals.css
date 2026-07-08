@@ -2805,7 +2805,7 @@ img {
   }
 }
 
-/* ── Offer PAC landing page ── */
+/* ── Offer PAC — minimal landing ── */
 .nav-link--promo {
   color: var(--terracotta-light) !important;
   font-weight: 600;
@@ -2829,6 +2829,155 @@ img {
   font-weight: 600;
 }
 
+.offer-min-hero {
+  padding: calc(var(--nav-height) + 2.5rem) 0 3rem;
+  background: var(--mint);
+}
+
+.offer-min-hero-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.05fr;
+  gap: 3rem;
+  align-items: center;
+}
+
+.offer-min-eyebrow {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--terracotta);
+  margin-bottom: 1rem;
+}
+
+.offer-min-hero-text h1 {
+  font-family: var(--font-display);
+  font-size: clamp(2.4rem, 5vw, 3.5rem);
+  font-weight: 700;
+  line-height: 1.08;
+  color: var(--forest-deep);
+  margin-bottom: 1.25rem;
+}
+
+.offer-min-hero-text h1 span {
+  color: var(--terracotta);
+}
+
+.offer-min-hero-text h1 em {
+  font-style: normal;
+  color: var(--sage-deep);
+}
+
+.offer-min-lead {
+  font-size: 1.05rem;
+  line-height: 1.65;
+  color: var(--text-muted);
+  max-width: 28rem;
+  margin-bottom: 2rem;
+}
+
+.offer-min-cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.offer-min-hero-visual {
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-xl);
+}
+
+.offer-min-hero-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}
+
+.offer-min-points {
+  padding: 3rem 0 4rem;
+  background: var(--cream-warm);
+}
+
+.offer-min-points-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+}
+
+.offer-min-point {
+  text-align: center;
+}
+
+.offer-min-point-img {
+  width: 100%;
+  height: auto;
+  max-height: 220px;
+  object-fit: cover;
+  border-radius: var(--radius-md);
+  margin-bottom: 1.25rem;
+  box-shadow: var(--shadow-md);
+}
+
+.offer-min-point h2 {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--forest-deep);
+  margin-bottom: 0.35rem;
+}
+
+.offer-min-point p {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.offer-min-point--accent h2 {
+  color: var(--terracotta);
+}
+
+.offer-legal {
+  background: var(--stone);
+  padding: 1.25rem 0;
+}
+
+.offer-legal p {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  line-height: 1.55;
+  text-align: center;
+  max-width: 52rem;
+  margin: 0 auto;
+}
+
+@media (max-width: 900px) {
+  .offer-min-hero-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .offer-min-hero-visual {
+    order: -1;
+  }
+
+  .offer-min-points-grid {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+
+  .offer-min-cta {
+    flex-direction: column;
+  }
+
+  .offer-min-cta .btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* ── Legacy offer styles (kept minimal) ── */
 .offer-hero {
   position: relative;
   min-height: clamp(520px, 85vh, 720px);
