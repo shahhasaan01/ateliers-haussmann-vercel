@@ -81,6 +81,9 @@ export default function Navbar() {
               <Link href="/aides-financement" className="nav-link">
                 Aides &amp; Financement
               </Link>
+              <Link href="/offre-pac-air-eau" className="nav-link nav-link--promo">
+                Offre PAC 1€*
+              </Link>
               <Link href="/#contact" className="nav-link">
                 Contact
               </Link>
@@ -177,6 +180,13 @@ export default function Navbar() {
             onClick={() => setMobileOpen(false)}
           >
             Aides &amp; Financement
+          </Link>
+          <Link
+            href="/offre-pac-air-eau"
+            className="mobile-nav-link mobile-nav-link--promo"
+            onClick={() => setMobileOpen(false)}
+          >
+            🎁 Offre PAC 1€* + Clim OFFERTE
           </Link>
         </nav>
 

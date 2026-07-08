@@ -34,6 +34,19 @@ export default function PompeAChaleurPage() {
       </section>
 
       {/* Aide banner */}
+      <div className="aide-banner aide-banner--promo">
+        <div className="container">
+          <div className="aide-banner-inner">
+            <p className="aide-banner-text">
+              🎁 <strong>Offre exceptionnelle :</strong> PAC AIR/EAU 1€* + Monosplit Air/Air OFFERT* pour les clients éligibles
+            </p>
+            <Link href="/offre-pac-air-eau" className="aide-banner-cta">
+              Découvrir l&apos;offre →
+            </Link>
+          </div>
+        </div>
+      </div>
+
       <div className="aide-banner">
         <div className="container">
           <div className="aide-banner-inner">
